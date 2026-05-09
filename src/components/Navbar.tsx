@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { GlassButton as LiquidGlassButton } from "@/components/ui/apple-tahoe-liquid-glass-button";
 import { GlassEffect, GlassFilter } from "@/components/ui/liquid-glass";
+import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const NAV_LINKS = [
   { label: "Solución", href: "#solucion" },
@@ -14,6 +16,7 @@ const NAV_LINKS = [
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,9 +43,11 @@ const Navbar = () => {
     }
     const el = document.querySelector(href);
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setIsOpen(false);
   };
 
   const goHome = () => {
+    setIsOpen(false);
     if (location.pathname !== "/") {
       navigate("/");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -75,27 +80,68 @@ const Navbar = () => {
         ))}
       </div>
 
-      <LiquidGlassButton
-        size="sm"
-        onClick={() => handleNav("#contacto")}
-        className="text-brand-primary font-bold ml-2"
-        glassColor="rgba(0, 229, 184, 0.15)"
+      <div className="hidden md:block">
+        <LiquidGlassButton
+          size="sm"
+          onClick={() => handleNav("#contacto")}
+          className="text-brand-primary font-bold ml-2"
+          glassColor="rgba(0, 229, 184, 0.15)"
+        >
+          Empezar
+        </LiquidGlassButton>
+      </div>
+
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="md:hidden text-brand-fg hover:text-brand-primary p-2 transition-colors"
+        aria-label="Alternar menú"
       >
-        Empezar
-      </LiquidGlassButton>
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
     </nav>
   );
 
   return (
     <>
       <GlassFilter />
-      <header className="fixed top-0 left-0 right-0 z-40 pt-4 px-4 pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 z-50 pt-4 px-4 pointer-events-none">
         <div className="max-w-5xl mx-auto pointer-events-auto">
           <GlassEffect className="rounded-full border border-brand-primary/20 bg-brand-bg/40 backdrop-blur-md">
             {navContent}
           </GlassEffect>
         </div>
       </header>
+
+      {/* Menú Móvil Fullscreen */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-brand-bg/95 backdrop-blur-xl flex flex-col items-center justify-center pt-20 px-4"
+          >
+            <div className="flex flex-col gap-4 w-full max-w-sm">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.href}
+                  onClick={() => handleNav(link.href, link.isRoute)}
+                  className="w-full font-display text-xl py-4 text-center text-brand-fg/80 hover:text-brand-primary border-b border-brand-fg/10 active:bg-brand-primary/10 transition-colors"
+                >
+                  {link.label}
+                </button>
+              ))}
+              <button
+                onClick={() => handleNav("#contacto")}
+                className="w-full mt-6 font-display font-bold text-xl py-4 text-center text-brand-bg bg-brand-primary rounded-full hover:bg-brand-primary/90 transition-colors shadow-[0_0_20px_rgba(0,229,184,0.3)]"
+              >
+                Empezar
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -138,7 +138,7 @@ const USE_CASES: UseCase[] = [
 
 /* ─── Mini flow component ───────────────────────────────── */
 const MiniFlow = ({ nodes }: { nodes: UseCase["nodes"] }) => (
-  <div className="flex items-center gap-1 flex-wrap mt-3">
+  <div className="flex items-center gap-1 flex-wrap mt-3 overflow-x-auto pb-1 scrollbar-none">
     {nodes.map((node, i) => (
       <div key={i} className="flex items-center gap-1">
         <span
@@ -307,14 +307,14 @@ const UseCasesSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ delay: 0.3 }}
-          className="mt-10 glass-card p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+          className="mt-10 glass-card p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left"
         >
           <div>
-            <p className="font-mono text-xs text-cool-gray uppercase tracking-widest mb-1">
+            <p className="font-mono text-[10px] md:text-xs text-cool-gray uppercase tracking-widest mb-2 md:mb-1">
               Ahorro total estimado implementando todos los flujos
             </p>
-            <p className="font-mono text-2xl font-bold text-light-slate">
-              <span className="text-gradient-cyan">61 horas / semana</span> liberadas por empleado
+            <p className="font-mono text-xl md:text-2xl font-bold text-light-slate leading-tight">
+              <span className="text-gradient-cyan block md:inline">61 horas / semana</span> liberadas por empleado
             </p>
           </div>
           <button

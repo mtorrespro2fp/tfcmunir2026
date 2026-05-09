@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 
 const chaosItems = [
-  { label: "📧 Emails sin responder", x: "10%", y: "15%", rotation: -8 },
-  { label: "📊 Excel roto", x: "55%", y: "10%", rotation: 5 },
-  { label: "📞 Llamadas perdidas", x: "25%", y: "55%", rotation: -3 },
-  { label: "📝 Facturas a mano", x: "60%", y: "50%", rotation: 12 },
+  { label: "📧 Emails sin responder", x: "5%", y: "15%", rotation: -8 },
+  { label: "📊 Excel roto", x: "45%", y: "10%", rotation: 5 },
+  { label: "📞 Llamadas perdidas", x: "15%", y: "55%", rotation: -3 },
+  { label: "📝 Facturas a mano", x: "50%", y: "50%", rotation: 12 },
   { label: "⏰ Citas olvidadas", x: "5%", y: "80%", rotation: -15 },
-  { label: "💬 WhatsApp sin leer", x: "65%", y: "80%", rotation: 7 },
-  { label: "📋 Datos duplicados", x: "40%", y: "35%", rotation: -6 },
+  { label: "💬 WhatsApp sin leer", x: "45%", y: "75%", rotation: 7 },
+  { label: "📋 Datos duplicados", x: "30%", y: "35%", rotation: -6 },
 ];
 
 const Problem = () => {

@@ -49,13 +49,13 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="font-display font-extrabold leading-[0.95] mb-8 tracking-tighter"
           >
-            <span className="block text-3xl md:text-5xl text-brand-fg/80 font-semibold mb-2">
+            <span className="block text-2xl md:text-5xl text-brand-fg/80 font-semibold mb-2">
               Neoflow
             </span>
-            <span className="block text-5xl md:text-7xl lg:text-8xl bg-clip-text text-transparent bg-gradient-to-br from-brand-primary via-brand-accent to-brand-secondary">
+            <span className="block text-4xl md:text-7xl lg:text-8xl bg-clip-text text-transparent bg-gradient-to-br from-brand-primary via-brand-accent to-brand-secondary">
               El motor de IA
             </span>
-            <span className="block text-4xl md:text-6xl lg:text-7xl text-brand-fg mt-1">
+            <span className="block text-3xl md:text-6xl lg:text-7xl text-brand-fg mt-1">
               para tu negocio
             </span>
           </motion.h1>
@@ -141,7 +141,7 @@ const Hero = () => {
               </p>
               <h2 className="font-display font-extrabold text-3xl md:text-5xl lg:text-6xl text-brand-fg leading-tight tracking-tight">
                 Tu negocio,{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-accent">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-accent block sm:inline">
                   pilotado por IA
                 </span>
               </h2>

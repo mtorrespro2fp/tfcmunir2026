@@ -63,10 +63,10 @@ const AIAgentButton = () => {
         animate={{ scale: 1 }}
         transition={{ delay: 2, type: "spring" }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center glow-cyan hover:scale-105 transition-transform"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-transform hover:scale-105 bg-brand-bg/50 backdrop-blur-sm border-2 border-brand-primary text-brand-primary shadow-[0_0_15px_rgba(0,229,184,0.5)]"
         aria-label="Abrir agente IA NeoFlow"
       >
-        {isOpen ? <X size={22} /> : <Bot size={22} />}
+        {isOpen ? <X size={20} className="md:w-[22px] md:h-[22px]" /> : <Bot size={20} className="md:w-[22px] md:h-[22px]" />}
       </motion.button>
 
       {/* Chat panel */}
@@ -77,7 +77,7 @@ const AIAgentButton = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 z-50 w-80 max-h-[440px] glass-card border-primary/30 flex flex-col overflow-hidden"
+            className="fixed bottom-20 right-4 md:bottom-24 md:right-6 z-50 w-[calc(100vw-32px)] md:w-80 max-h-[440px] glass-card border-brand-primary/50 flex flex-col overflow-hidden shadow-[0_0_30px_rgba(0,229,184,0.15)]"
           >
             {/* Header */}
             <div className="p-4 border-b border-border/50 flex items-center gap-2">
