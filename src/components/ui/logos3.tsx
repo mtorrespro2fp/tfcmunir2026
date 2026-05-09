@@ -38,56 +38,56 @@ const Logos3 = ({
       description: "ChatGPT",
       image: chatgptLogo,
       href: "https://chatgpt.com/",
-      className: "h-12 w-auto object-contain filter grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all",
+      className: "h-12 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
     },
     {
       id: "logo-claude",
       description: "Claude AI",
       image: claudeLogo,
       href: "https://claude.ai/",
-      className: "h-10 w-auto object-contain filter grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all",
+      className: "h-10 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
     },
     {
       id: "logo-n8n",
       description: "n8n",
       image: n8nLogo,
       href: "https://n8n.io/",
-      className: "h-10 w-auto object-contain filter grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all",
+      className: "h-10 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
     },
     {
       id: "logo-gemini",
       description: "Google Gemini",
       image: geminiLogo,
       href: "https://gemini.google.com/",
-      className: "h-10 w-auto object-contain filter grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all",
+      className: "h-10 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
     },
     {
       id: "logo-github",
       description: "GitHub",
       image: githubLogo,
       href: "https://github.com/",
-      className: "h-12 w-auto object-contain filter grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all",
+      className: "h-12 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
     },
     {
       id: "logo-pro2fp",
       description: "Pro2FP",
       image: pro2fpLogo,
       href: "https://pro2fp.es/",
-      className: "h-12 w-auto object-contain opacity-60 hover:opacity-100 transition-all",
+      className: "h-12 w-auto object-contain opacity-100 md:opacity-60 md:hover:opacity-100 transition-all",
     },
     {
       id: "logo-madrid",
       description: "Comunidad de Madrid",
       image: madridLogo,
       href: "https://www.comunidad.madrid/",
-      className: "h-12 w-auto object-contain filter brightness-0 invert opacity-60 hover:opacity-100 transition-all",
+      className: "h-12 w-auto object-contain filter-none opacity-100 md:filter md:brightness-0 md:invert md:opacity-60 md:hover:opacity-100 transition-all",
     },
     {
       id: "logo-ods",
       description: "ODS 2030",
       image: odsLogo,
       href: "https://ods.uam.es/agenda-2030-y-ods/",
-      className: "h-12 w-auto object-contain opacity-90 hover:opacity-100 transition-all rounded-sm filter grayscale hover:grayscale-0",
+      className: "h-12 w-auto object-contain opacity-100 md:opacity-90 md:hover:opacity-100 transition-all rounded-sm filter-none md:filter md:grayscale md:hover:grayscale-0",
     },
   ],
   className
@@ -110,13 +110,13 @@ const Logos3 = ({
               {logos.map((logo) => (
                 <CarouselItem
                   key={logo.id}
-                  className="flex basis-1/3 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
+                  className="flex basis-1/2 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
                 >
                   <a 
                     href={logo.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-6 flex shrink-0 items-center justify-center cursor-pointer"
+                    className="mx-8 md:mx-6 flex shrink-0 items-center justify-center cursor-pointer"
                   >
                     <img
                       src={logo.image}

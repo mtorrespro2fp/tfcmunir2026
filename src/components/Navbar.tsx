@@ -124,20 +124,24 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-4 w-full max-w-sm">
               {NAV_LINKS.map((link) => (
-                <button
+                <LiquidGlassButton
                   key={link.href}
                   onClick={() => handleNav(link.href, link.isRoute)}
-                  className="w-full font-display text-xl py-4 text-center text-brand-fg/80 hover:text-brand-primary border-b border-brand-fg/10 active:bg-brand-primary/10 transition-colors"
+                  className="w-full justify-center text-lg md:text-xl font-display font-medium text-brand-fg/80 hover:text-brand-primary py-3"
+                  glassColor="rgba(255, 255, 255, 0.05)"
                 >
                   {link.label}
-                </button>
+                </LiquidGlassButton>
               ))}
-              <button
-                onClick={() => handleNav("#contacto")}
-                className="w-full mt-6 font-display font-bold text-xl py-4 text-center text-brand-bg bg-brand-primary rounded-full hover:bg-brand-primary/90 transition-colors shadow-[0_0_20px_rgba(0,229,184,0.3)]"
-              >
-                Empezar
-              </button>
+              <div className="mt-4">
+                <LiquidGlassButton
+                  onClick={() => handleNav("#contacto")}
+                  className="w-full justify-center font-display font-bold text-lg py-3 text-brand-primary"
+                  glassColor="rgba(0, 229, 184, 0.15)"
+                >
+                  Empezar
+                </LiquidGlassButton>
+              </div>
             </div>
           </motion.div>
         )}

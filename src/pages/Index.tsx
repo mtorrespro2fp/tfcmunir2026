@@ -5,7 +5,6 @@ import Solution from "@/components/Solution";
 import UseCasesSection from "@/components/UseCasesSection";
 import LiveDemoSection from "@/components/LiveDemoSection";
 import N8nMockup from "@/components/N8nMockup";
-import PricingSection4 from "@/components/ui/pricing-section-4";
 import OdsSection from "@/components/OdsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -38,10 +37,7 @@ const Index = () => {
       <LiveDemoSection />
       {/* 07 — Flujos n8n detallados */}
       <N8nMockup />
-      {/* 08 — Precios */}
-      <div id="precios" className="relative z-10 pt-20">
-        <PricingSection4 onSelectPlan={handlePlanSelect} />
-      </div>
+      {/* 08 — Eliminado (Precios se ven en contacto) */}
       {/* 09 — ODS / impacto social */}
       <OdsSection />
       {/* 10 — Contacto */}

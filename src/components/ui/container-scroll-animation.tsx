@@ -21,10 +21,10 @@ export const ContainerScroll = ({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const scaleDimensions = () => (isMobile ? [1, 1] : [1.05, 1]);
-  const rotate = useTransform(scrollYProgress, [0, 1], isMobile ? [0, 0] : [20, 0]);
+  const scaleDimensions = () => (isMobile ? [0.95, 1] : [1.05, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 1], isMobile ? [10, 0] : [20, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
-  const translate = useTransform(scrollYProgress, [0, 1], isMobile ? [0, 0] : [0, -100]);
+  const translate = useTransform(scrollYProgress, [0, 1], isMobile ? [0, -30] : [0, -100]);
 
   return (
     <div
