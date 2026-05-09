@@ -58,7 +58,7 @@ const ContactSection = () => {
     <section id="contacto" className="relative py-24 md:py-32 overflow-hidden">
       <div className="container mx-auto px-6">
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-4">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-4 text-center">
           <span className="font-mono text-xs text-primary tracking-widest uppercase">
             // 07 — Contacto
           </span>
@@ -67,7 +67,7 @@ const ContactSection = () => {
         <motion.h2
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-5xl font-bold text-light-slate mb-4"
+          className="text-3xl md:text-5xl font-bold text-light-slate mb-4 text-center"
         >
           Empieza a{" "}
           <span className="text-neon-green">automatizar</span>
@@ -76,12 +76,12 @@ const ContactSection = () => {
         <motion.p
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
           viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}
-          className="font-body text-lg text-muted-foreground max-w-xl mb-12"
+          className="font-body text-lg text-muted-foreground max-w-xl mb-12 text-center mx-auto"
         >
           Cuéntanos tu negocio. En menos de 24 horas te enviamos una propuesta personalizada.
         </motion.p>
 
-        <div className="grid md:grid-cols-2 gap-10 items-start">
+        <div className="max-w-2xl mx-auto">
 
           {/* ── Form ─────────────────────────────────────── */}
           <motion.div
@@ -193,35 +193,6 @@ const ContactSection = () => {
                 )}
               </form>
             )}
-          </motion.div>
-
-          {/* ── Plans ────────────────────────────────────── */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-5"
-          >
-            {[
-              { title: "Plan Starter",       price: "89€/mes",  desc: "Landing + 1 agente IA + 3 flujos n8n. Ideal para empezar.", color: "border-primary/40" },
-              { title: "Plan Profesional",   price: "249€/mes", desc: "Web personalizada + 3 agentes + 10 flujos + analytics.",   color: "border-accent/40" },
-              { title: "Plan Enterprise",    price: "599€/mes", desc: "Solución completa + flujos ilimitados + SLA 99.9% + onboarding.", color: "border-primary/40" },
-            ].map((plan, i) => (
-              <div key={i} className={`glass-card p-5 border ${plan.color} hover:border-primary/60 transition-colors cursor-pointer`}
-                onClick={() => document.getElementById("contacto")?.querySelector("form textarea")?.focus()}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-sm font-bold text-light-slate">{plan.title}</span>
-                  <span className="font-mono text-lg font-bold text-primary">{plan.price}</span>
-                </div>
-                <p className="font-body text-sm text-muted-foreground">{plan.desc}</p>
-              </div>
-            ))}
-
-            <div className="glass-card p-5 border border-neon-green/20">
-              <span className="font-mono text-xs text-neon-green block mb-2">● DEMO GRATUITA</span>
-              <p className="font-body text-sm text-muted-foreground">
-                Primera consultoría de automatización sin coste. Analizamos tu negocio y te mostramos qué automatizar en 30 minutos.
-              </p>
-            </div>
           </motion.div>
 
         </div>

@@ -56,11 +56,27 @@ const plans = [
     buttonText: "Empezar",
     buttonVariant: "outline" as const,
     includes: [
-      "Todo lo de Business, además:",
       "Agentes IA ilimitados",
       "Conexión a CRMs propios",
       "Entrenamiento IA a medida",
       "Manager de cuenta dedicado",
+    ],
+  },
+  {
+    name: "Demo Gratuita",
+    description:
+      "Primera consultoría de automatización sin coste. Analizamos tu negocio y te mostramos qué automatizar en 30 minutos.",
+    price: 0,
+    yearlyPrice: 0,
+    buttonText: "Agendar Demo",
+    buttonVariant: "outline" as const,
+    isDemo: true,
+    includes: [
+      "Qué incluye la sesión:",
+      "Auditoría de 30 minutos",
+      "Análisis de cuellos de botella",
+      "Ejemplos de automatización",
+      "Sin compromiso",
     ],
   },
 ];
@@ -217,7 +233,7 @@ export default function PricingSection4({ onSelectPlan }: PricingSection4Props) 
         </TimelineContent>
       </article>
 
-      <div className="grid md:grid-cols-3 max-w-6xl gap-6 py-6 mx-auto px-4 lg:px-8 relative z-10">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 max-w-[1400px] gap-6 py-6 mx-auto px-4 lg:px-8 relative z-10">
         {plans.map((plan, index) => (
           <TimelineContent
             key={plan.name}
@@ -245,19 +261,27 @@ export default function PricingSection4({ onSelectPlan }: PricingSection4Props) 
                   <h3 className="text-2xl font-display font-semibold text-brand-fg">{plan.name}</h3>
                 </div>
                 <div className="flex items-baseline mt-2">
-                  <span className="text-4xl font-bold text-brand-primary">
-                    €
-                    <NumberFlow
-                      format={{
-                        currency: "EUR",
-                      }}
-                      value={isYearly ? plan.yearlyPrice : plan.price}
-                      className="text-4xl font-bold ml-1"
-                    />
-                  </span>
-                  <span className="text-brand-fg/50 ml-1 text-sm font-mono">
-                    /{isYearly ? "año" : "mes"}
-                  </span>
+                  {plan.isDemo ? (
+                     <span className="text-4xl font-bold text-brand-primary uppercase tracking-tight">
+                       Gratis
+                     </span>
+                  ) : (
+                    <>
+                      <span className="text-4xl font-bold text-brand-primary">
+                        €
+                        <NumberFlow
+                          format={{
+                            currency: "EUR",
+                          }}
+                          value={isYearly ? plan.yearlyPrice : plan.price}
+                          className="text-4xl font-bold ml-1"
+                        />
+                      </span>
+                      <span className="text-brand-fg/50 ml-1 text-sm font-mono">
+                        /{isYearly ? "año" : "mes"}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <p className="text-sm text-brand-fg/70 mt-4 min-h-[40px]">{plan.description}</p>
               </CardHeader>
