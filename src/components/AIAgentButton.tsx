@@ -63,10 +63,10 @@ const AIAgentButton = () => {
         animate={{ scale: 1 }}
         transition={{ delay: 2, type: "spring" }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-transform hover:scale-105 bg-brand-bg/50 backdrop-blur-sm border-2 border-brand-primary text-brand-primary shadow-[0_0_15px_rgba(0,229,184,0.5)]"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-transform hover:scale-105 bg-transparent backdrop-blur-sm border-2 border-brand-primary text-brand-primary shadow-[0_0_15px_rgba(0,229,184,0.5)]"
         aria-label="Abrir agente IA NeoFlow"
       >
-        {isOpen ? <X size={20} className="md:w-[22px] md:h-[22px]" /> : <Bot size={20} className="md:w-[22px] md:h-[22px]" />}
+        {isOpen ? <X size={18} className="md:w-[22px] md:h-[22px]" /> : <Bot size={18} className="md:w-[22px] md:h-[22px]" />}
       </motion.button>
 
       {/* Chat panel */}

@@ -95,8 +95,8 @@ const Logos3 = ({
   return (
     <section className={`py-6 md:py-10 relative overflow-hidden bg-brand-bg z-20 ${className || ''}`}>
       <div className="container px-4 flex flex-col items-center text-center">
-        <h2 className="mb-6 font-mono text-sm tracking-widest text-brand-primary uppercase">
-          {heading}
+        <h2 className="mb-8 md:mb-12 font-display font-extrabold text-xl md:text-3xl lg:text-4xl tracking-tight text-brand-fg uppercase">
+          TECNOLOGÍAS QUE <span className="text-brand-primary">IMPULSAN</span> NEOFLOW
         </h2>
       </div>
       <div className="pt-2 md:pt-4">
