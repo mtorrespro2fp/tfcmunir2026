@@ -93,7 +93,7 @@ const Logos3 = ({
   className
 }: Logos3Props) => {
   return (
-    <section className={`py-6 md:py-10 relative overflow-hidden bg-brand-bg z-20 ${className || ''}`}>
+    <section className={`py-6 md:py-10 relative overflow-hidden bg-transparent z-20 ${className || ''}`}>
       <div className="container px-4 flex flex-col items-center text-center">
         <h2 className="mb-8 md:mb-12 font-display font-extrabold text-xl md:text-3xl lg:text-4xl tracking-tight text-brand-fg uppercase">
           TECNOLOGÍAS QUE <span className="text-brand-primary">IMPULSAN</span> NEOFLOW
@@ -129,8 +129,8 @@ const Logos3 = ({
             </CarouselContent>
           </Carousel>
           {/* Gradients for smooth fade in/out on the sides */}
-          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-brand-bg to-transparent pointer-events-none"></div>
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-brand-bg to-transparent pointer-events-none"></div>
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none"></div>
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none"></div>
         </div>
       </div>
     </section>
