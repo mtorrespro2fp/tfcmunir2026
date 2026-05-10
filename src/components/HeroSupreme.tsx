@@ -37,7 +37,7 @@ const HeroSupreme = () => {
           >
             <span className="w-2 h-2 rounded-full bg-brand-primary node-pulse" />
             <span className="font-mono text-[10px] text-brand-primary tracking-widest uppercase">
-              Sistema operativo · v2.0.26
+              Sistema operativo · v3.0.0
             </span>
           </motion.div>
 

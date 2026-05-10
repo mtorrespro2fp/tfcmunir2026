@@ -50,7 +50,7 @@ const ProtoSupreme = () => {
       {/* ZONA INTERACTIVA: TUBOS NEON PARA SOLUCIONES Y CASOS DE USO */}
       {/* ========================================================== */}
       <div className="relative w-full">
-        <div className="absolute inset-0 z-0 pointer-events-auto opacity-30 mix-blend-screen">
+        <div className="absolute inset-0 z-0 pointer-events-auto mix-blend-screen opacity-50">
           <TubesBackground enableClickInteraction={true} />
         </div>
 
