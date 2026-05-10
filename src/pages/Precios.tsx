@@ -78,7 +78,10 @@ const Precios = () => {
 
   return (
     <div className="min-h-screen bg-transparent selection:bg-brand-primary/20">
-      <Navbar />
+      <Navbar extraLinks={[
+        { label: "Acerca de", href: "/acerca-de", isRoute: true },
+        { label: "Términos", href: "/terminos", isRoute: true },
+      ]} />
 
       <main>
       <PricingSection4 onSelectPlan={selectPlan} />

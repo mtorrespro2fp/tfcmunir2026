@@ -16,7 +16,7 @@ const NAV_LINKS: NavLink[] = [
   { label: "Casos de uso", href: "#casos-uso" },
   { label: "Demo", href: "#live-demo" },
   { label: "Flujos", href: "#flujos" },
-  { label: "Precios", href: "#precios" },
+  { label: "Precios", href: "/precios", isRoute: true },
   { label: "Contacto", href: "#contacto" },
 ];
 
