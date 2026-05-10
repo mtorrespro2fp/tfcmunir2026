@@ -1,14 +1,14 @@
 "use client";
 
 import AutoScroll from "embla-carousel-auto-scroll";
-import chatgptLogo from "../../../public/pngimg.com-chatgpt_PNG2-1.png";
-import claudeLogo from "../../../public/Claude_AI_logo.svg.png";
+import chatgptLogo from "../../../public/pngimg.com-chatgpt_PNG2-1.webp";
+import claudeLogo from "../../../public/Claude_AI_logo.svg.webp";
 import n8nLogo from "../../../public/N8n-logo-new.svg";
-import geminiLogo from "../../../public/Google_Gemini_logo_2025.svg.png";
-import githubLogo from "../../../public/6477657755c46a6f4965855f_github_large.png";
-import pro2fpLogo from "../../../public/logo pro2fp.png";
-import madridLogo from "../../../public/logo-comunidad-madrid-e1562021779235.png";
-import odsLogo from "../../../public/ods 2030.png";
+import geminiLogo from "../../../public/Google_Gemini_logo_2025.svg.webp";
+import githubLogo from "../../../public/6477657755c46a6f4965855f_github_large.webp";
+import pro2fpLogo from "../../../public/logo pro2fp.webp";
+import madridLogo from "../../../public/logo-comunidad-madrid-e1562021779235.webp";
+import odsLogo from "../../../public/ods 2030.webp";
 
 import {
   Carousel,
@@ -96,7 +96,7 @@ const Logos3 = ({
     <section className={`py-6 md:py-10 relative overflow-hidden bg-transparent z-20 ${className || ''}`}>
       <div className="container px-4 flex flex-col items-center text-center">
         <h2 className="mb-8 md:mb-12 font-display font-extrabold text-xl md:text-3xl lg:text-4xl tracking-tight text-brand-fg uppercase">
-          TECNOLOGÍAS QUE <span className="text-brand-primary">IMPULSAN</span> NEOFLOW
+          TECNOLOGÍAS e identidades QUE <span className="text-brand-primary">IMPULSAN</span> NEOFLOW
         </h2>
       </div>
       <div className="pt-2 md:pt-4">

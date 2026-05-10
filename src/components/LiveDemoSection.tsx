@@ -77,6 +77,8 @@ const LiveDemoSection = () => {
   const [aiReply, setAiReply] = useState<string>("");
   const [elapsed, setElapsed] = useState(0);
   const [n8nOnline, setN8nOnline] = useState<boolean | null>(null);
+  const [cooldown, setCooldown] = useState(0);
+  const [submitCount, setSubmitCount] = useState(0);
   const logEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll log
@@ -84,9 +86,16 @@ const LiveDemoSection = () => {
     logEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [log]);
 
+  useEffect(() => {
+    if (cooldown > 0) {
+      const timer = setTimeout(() => setCooldown(c => c - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [cooldown]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.nombre || !form.email) return;
+    if (!form.nombre || !form.email || cooldown > 0 || submitCount >= 3) return;
 
     const lines = buildLog(form.email, form.negocio);
     setLog(lines.map(l => ({ ...l, status: "pending" })));
@@ -115,6 +124,8 @@ const LiveDemoSection = () => {
 
     setElapsed(Date.now() - startTime);
     setPhase("done");
+    setSubmitCount(c => c + 1);
+    setCooldown(15);
   };
 
   const reset = () => {
@@ -241,10 +252,15 @@ const LiveDemoSection = () => {
 
                     <Button
                       type="submit"
+                      disabled={phase !== "idle" || cooldown > 0 || submitCount >= 3}
                       className="w-full font-mono text-sm uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan py-5 group"
                     >
-                      <Play size={14} className="mr-2 group-hover:scale-110 transition-transform" />
-                      ▶&nbsp; Ejecutar Flujo n8n
+                      {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Espera ${cooldown}s...` : (
+                        <>
+                          <Play size={14} className="mr-2 group-hover:scale-110 transition-transform" />
+                          ▶&nbsp; Ejecutar Flujo n8n
+                        </>
+                      )}
                     </Button>
 
                     <p className="font-mono text-[10px] text-cool-gray text-center">
@@ -325,9 +341,10 @@ const LiveDemoSection = () => {
                   {phase === "done" && (
                     <button
                       onClick={reset}
-                      className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline cursor-pointer"
+                      disabled={cooldown > 0 || submitCount >= 3}
+                      className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline cursor-pointer disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed"
                     >
-                      → Probar de nuevo
+                      {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Probar de nuevo en ${cooldown}s` : "→ Probar de nuevo"}
                     </button>
                   )}
                 </motion.div>

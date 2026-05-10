@@ -29,6 +29,7 @@ const AIAgentButton = () => {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [msgCount, setMsgCount] = useState(0);
 
   useEffect(() => {
     const handleOpen = () => setIsOpen(true);
@@ -37,11 +38,12 @@ const AIAgentButton = () => {
   }, []);
 
   const handleSend = () => {
-    if (!input.trim() || loading) return;
+    if (!input.trim() || loading || msgCount >= 20) return;
     const userMsg = input.trim();
     setMessages(prev => [...prev, { role: "user", text: userMsg }]);
     setInput("");
     setLoading(true);
+    setMsgCount(c => c + 1);
 
     setTimeout(() => {
       setMessages(prev => [
@@ -115,9 +117,12 @@ const AIAgentButton = () => {
               {["precios", "WhatsApp", "n8n"].map(q => (
                 <button
                   key={q}
+                  disabled={loading || msgCount >= 20}
                   onClick={() => {
+                    if (msgCount >= 20) return;
                     setMessages(prev => [...prev, { role: "user", text: q }]);
                     setLoading(true);
+                    setMsgCount(c => c + 1);
                     setTimeout(() => {
                       setMessages(prev => [...prev, { role: "bot", text: getResponse(q) }]);
                       setLoading(false);
@@ -136,12 +141,14 @@ const AIAgentButton = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder="Escribe tu consulta..."
-                className="flex-1 bg-background/50 border border-border rounded px-3 py-2 font-mono text-xs text-foreground placeholder:text-cool-gray focus:outline-none focus:border-primary/50"
+                placeholder={msgCount >= 20 ? "Límite de mensajes alcanzado" : "Escribe tu consulta..."}
+                maxLength={500}
+                disabled={msgCount >= 20}
+                className="flex-1 bg-background/50 border border-border rounded px-3 py-2 font-mono text-xs text-foreground placeholder:text-cool-gray focus:outline-none focus:border-primary/50 disabled:opacity-50"
               />
               <button
                 onClick={handleSend}
-                disabled={loading}
+                disabled={loading || msgCount >= 20}
                 className="p-2 rounded border border-primary/30 text-primary hover:bg-primary/10 transition-colors disabled:opacity-40"
               >
                 <Send size={14} />

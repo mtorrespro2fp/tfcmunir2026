@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Send, CheckCircle, Loader2, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -36,10 +36,19 @@ const ContactSection = () => {
   const [loading, setLoading] = useState(false);
   const [aiReply, setAiReply] = useState<string>("");
   const [n8nLive, setN8nLive] = useState<boolean | null>(null);
+  const [cooldown, setCooldown] = useState(0);
+  const [submitCount, setSubmitCount] = useState(0);
+
+  useEffect(() => {
+    if (cooldown > 0) {
+      const timer = setTimeout(() => setCooldown(c => c - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [cooldown]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email) return;
+    if (!form.name || !form.email || cooldown > 0 || submitCount >= 3) return;
     setLoading(true);
 
     const result = await submitToN8n(form);
@@ -52,6 +61,8 @@ const ContactSection = () => {
 
     setLoading(false);
     setSent(true);
+    setSubmitCount(c => c + 1);
+    setCooldown(15);
   };
 
   return (
@@ -111,9 +122,10 @@ const ContactSection = () => {
                 </span>
                 <button
                   onClick={() => { setSent(false); setForm({ name: "", email: "", business: "", message: "" }); }}
-                  className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline mt-2"
+                  className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline mt-2 disabled:opacity-50 disabled:no-underline"
+                  disabled={cooldown > 0 || submitCount >= 3}
                 >
-                  Enviar otro mensaje
+                  {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Enviar otro mensaje en ${cooldown}s` : "Enviar otro mensaje"}
                 </button>
               </div>
             ) : (
@@ -170,7 +182,7 @@ const ContactSection = () => {
                 </div>
 
                 <Button
-                  type="submit" disabled={loading}
+                  type="submit" disabled={loading || cooldown > 0 || submitCount >= 3}
                   className="w-full font-mono text-sm uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan py-5"
                 >
                   {loading ? (
@@ -178,6 +190,10 @@ const ContactSection = () => {
                       <Loader2 size={14} className="animate-spin" />
                       Ejecutando flujo n8n...
                     </span>
+                  ) : submitCount >= 3 ? (
+                    "Límite de envíos alcanzado"
+                  ) : cooldown > 0 ? (
+                    `Espera ${cooldown}s...`
                   ) : (
                     <><Send size={15} className="mr-2" /> &gt; Enviar consulta</>
                   )}

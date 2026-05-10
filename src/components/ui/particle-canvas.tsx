@@ -56,6 +56,8 @@ export const ParticleCanvas: React.FC<Props> = ({
   const backgroundParticlesRef = useRef<BackgroundParticle[]>([]);
   const mouseRef = useRef<MouseState>({ x: -1000, y: -1000, isActive: false });
   const frameIdRef = useRef<number>(0);
+  const lastMoveTimeRef = useRef<number>(Date.now());
+  const frameCountRef = useRef<number>(0);
 
   const initParticles = useCallback((width: number, height: number) => {
     const particleCount = Math.floor(width * height * getParticleDensity());
@@ -89,6 +91,16 @@ export const ParticleCanvas: React.FC<Props> = ({
   }, [primaryColor]);
 
   const animate = useCallback((time: number) => {
+    // Throttling logic: 15fps if idle > 2s
+    const idleTime = Date.now() - lastMoveTimeRef.current;
+    if (idleTime > 2000) {
+      frameCountRef.current++;
+      if (frameCountRef.current % 4 !== 0) {
+        frameIdRef.current = requestAnimationFrame(animate);
+        return;
+      }
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -185,6 +197,7 @@ export const ParticleCanvas: React.FC<Props> = ({
   // Track mouse globally so the effect feels alive across the whole page-section
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
+      lastMoveTimeRef.current = Date.now();
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       mouseRef.current = {

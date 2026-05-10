@@ -1,27 +1,32 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import NeuralBackground from "@/components/ui/flow-field-background";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { TerminalDemo } from "@/components/TerminalDemo";
 
-const Hero = () => {
+const HeroSupreme = () => {
   return (
     <>
-      {/* ========================================================== */}
-      {/* HERO PRINCIPAL — Particulas interactivas + titulo impactante */}
-      {/* ========================================================== */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
-        {/* Capa 1: Canvas de particulas con repulsion al raton (Ahora global) */}
+        
+        {/* Supreme Calm Background */}
+        <div className="absolute inset-0 z-0">
+          <NeuralBackground 
+            color="#00E5B8" 
+            trailOpacity={0.05} 
+            speed={0.4} 
+            particleCount={700} 
+          />
+        </div>
 
-        {/* Capa 2: Gradiente de viñeta para legibilidad */}
+        {/* Gradiente para transición */}
         <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-brand-bg/40 to-brand-bg pointer-events-none" />
 
-        {/* Marcadores de esquina sutiles */}
         <div className="absolute top-8 left-8 w-12 h-12 border-l border-t border-brand-primary/30 z-[2]" />
         <div className="absolute top-8 right-8 w-12 h-12 border-r border-t border-brand-primary/30 z-[2]" />
         <div className="absolute bottom-8 left-8 w-12 h-12 border-l border-b border-brand-primary/30 z-[2]" />
         <div className="absolute bottom-8 right-8 w-12 h-12 border-r border-b border-brand-primary/30 z-[2]" />
 
-        {/* Capa 3: Contenido del Hero */}
         <div className="relative z-10 container mx-auto px-6 text-center max-w-5xl">
           {/* Status badge */}
           <motion.div
@@ -36,7 +41,7 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Titulo principal — Montserrat 800, impactante */}
+          {/* Titulo principal */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,7 +79,6 @@ const Hero = () => {
             </p>
           </motion.div>
 
-          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -83,49 +87,45 @@ const Hero = () => {
           >
             <Button
               size="lg"
-              className="font-display font-bold text-sm uppercase tracking-wider bg-brand-primary text-brand-bg hover:bg-brand-primary/90 px-8 py-6 shadow-[0_0_30px_rgba(0,229,184,0.3)]"
+              className="font-display font-bold text-sm uppercase tracking-wider bg-brand-primary text-brand-bg hover:bg-brand-primary/90 px-8 py-6 shadow-[0_0_30px_rgba(0,229,184,0.3)] transition-all hover:scale-105"
               onClick={() =>
                 document.getElementById("live-demo")?.scrollIntoView({ behavior: "smooth" })
               }
             >
-              &gt; Ver Demo en Vivo
+              &gt; Flujo en Vivo
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="font-display font-bold text-sm uppercase tracking-wider border-brand-primary/40 text-brand-primary hover:bg-brand-primary/10 px-8 py-6"
+              className="font-display font-bold text-sm uppercase tracking-wider border-brand-primary/40 text-brand-primary hover:bg-brand-primary/10 px-8 py-6 transition-all"
               onClick={() =>
                 document.getElementById("casos-uso")?.scrollIntoView({ behavior: "smooth" })
               }
             >
-              Ver Casos de Uso
+              Explorar Serenidad
             </Button>
           </motion.div>
         </div>
 
-        {/* Indicador de scroll */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.5 }}
           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
         >
-          <span className="font-mono text-[10px] text-brand-fg/40 uppercase tracking-[0.3em]">
-            Desliza para descubrir
+          <span className="font-mono text-[10px] text-brand-fg/50 uppercase tracking-[0.3em]">
+            Desliza para fluir
           </span>
-          <div className="w-5 h-9 rounded-full border border-brand-fg/20 flex items-start justify-center p-1.5">
+          <div className="w-5 h-9 rounded-full border border-brand-primary/40 flex items-start justify-center p-1.5 shadow-[0_0_15px_rgba(0,229,184,0.2)]">
             <motion.div
               animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               className="w-1 h-1 rounded-full bg-brand-primary"
             />
           </div>
         </motion.div>
       </section>
 
-      {/* ========================================================== */}
-      {/* SCROLL ANIMATION — Card 3D con dashboard se revela al hacer scroll */}
-      {/* ========================================================== */}
       <section className="relative bg-transparent overflow-hidden">
         <ContainerScroll
           titleComponent={
@@ -135,18 +135,13 @@ const Hero = () => {
               </p>
               <h2 className="font-display font-extrabold text-3xl md:text-5xl lg:text-6xl text-brand-fg leading-tight tracking-tight">
                 Tu negocio,{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-accent block sm:inline">
-                  pilotado por IA
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-accent block sm:inline drop-shadow-sm">
+                  pilotado con serenidad
                 </span>
               </h2>
-              <p className="font-sans text-base md:text-lg text-brand-fg/60 max-w-2xl mx-auto leading-relaxed">
-                Centraliza reservas, leads, facturas y atencion al cliente en un mismo
-                panel. Lo que antes te llevaba horas, ahora ocurre solo.
-              </p>
             </div>
           }
         >
-          {/* Terminal Ficticia Interactiva de NeoFlow */}
           <TerminalDemo />
         </ContainerScroll>
       </section>
@@ -154,4 +149,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroSupreme;

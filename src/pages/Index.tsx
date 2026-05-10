@@ -29,7 +29,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-brand-bg">
+    <div className="min-h-screen bg-transparent selection:bg-brand-primary/20">
       <Navbar />
       {/* 01 — Hero (particulas + parallax) */}
       <Hero />
@@ -46,7 +46,7 @@ const Index = () => {
       {/* 07 — Flujos n8n detallados */}
       <N8nMockup />
       {/* 08 — Precios */}
-      <div id="precios" className="relative z-10 pt-20">
+      <div id="precios" className="relative z-10 pt-20 bg-transparent">
         <PricingSection4 onSelectPlan={handlePlanSelect} />
       </div>
       {/* 09 — ODS / impacto social */}

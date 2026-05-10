@@ -5,7 +5,13 @@ import { GlassEffect, GlassFilter } from "@/components/ui/liquid-glass";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const NAV_LINKS = [
+interface NavLink {
+  label: string;
+  href: string;
+  isRoute?: boolean;
+}
+
+const NAV_LINKS: NavLink[] = [
   { label: "Solución", href: "#solucion" },
   { label: "Casos de uso", href: "#casos-uso" },
   { label: "Demo", href: "#live-demo" },
@@ -14,7 +20,11 @@ const NAV_LINKS = [
   { label: "Contacto", href: "#contacto" },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  extraLinks?: NavLink[];
+}
+
+const Navbar = ({ extraLinks = [] }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -67,7 +77,7 @@ const Navbar = () => {
       </button>
 
       <div className="hidden md:flex items-center gap-2">
-        {NAV_LINKS.map((link) => (
+        {[...NAV_LINKS, ...extraLinks].map((link) => (
           <LiquidGlassButton
             key={link.href}
             size="sm"
@@ -123,7 +133,7 @@ const Navbar = () => {
             className="fixed inset-0 z-40 bg-brand-bg/95 backdrop-blur-xl flex flex-col items-center justify-center pt-20 px-4"
           >
             <div className="flex flex-col gap-4 w-full max-w-sm">
-              {NAV_LINKS.map((link) => (
+              {[...NAV_LINKS, ...extraLinks].map((link) => (
                 <LiquidGlassButton
                   key={link.href}
                   onClick={() => handleNav(link.href, link.isRoute)}
