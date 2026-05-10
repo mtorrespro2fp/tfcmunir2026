@@ -179,7 +179,7 @@ export default function PricingSection4({ onSelectPlan }: PricingSection4Props) 
         animationNum={5}
         timelineRef={pricingRef}
         customVariants={revealVariants}
-        className="absolute left-0 top-[-114px] w-full h-[113.625vh] flex flex-col items-start justify-start content-start flex-none flex-nowrap gap-2.5 overflow-hidden p-0 z-0 pointer-events-none"
+        className="absolute left-0 top-[-114px] w-full h-full flex flex-col items-start justify-start content-start flex-none flex-nowrap gap-2.5 overflow-hidden p-0 z-0 pointer-events-none"
       >
         <div className="mx-auto relative w-full max-w-4xl opacity-30">
           <div
