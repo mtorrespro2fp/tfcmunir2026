@@ -17,6 +17,13 @@ const Index = () => {
   const navigate = useNavigate();
 
   const handlePlanSelect = (planName: string, isYearly: boolean) => {
+    if (planName === "Demo Gratuita") {
+      const contactSection = document.getElementById("contacto");
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: "smooth" });
+      }
+      return;
+    }
     navigate("/precios", { state: { planName, isYearly } });
     window.scrollTo(0, 0);
   };
