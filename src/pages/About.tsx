@@ -150,7 +150,7 @@ const About = () => {
               </p>
               <h2 className="font-display font-extrabold text-3xl md:text-4xl text-brand-fg mb-6 tracking-tight">
                 Automatizar con{" "}
-                <span className="text-brand-primary">serenidad</span>
+                <span className="text-brand-primary">calma</span>
               </h2>
               <p className="text-brand-fg/70 leading-relaxed mb-4">
                 NeoFlow es un motor de automatización inteligente diseñado específicamente para pequeñas y medianas empresas. 

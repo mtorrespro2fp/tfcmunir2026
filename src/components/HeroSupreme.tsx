@@ -102,7 +102,7 @@ const HeroSupreme = () => {
                 document.getElementById("casos-uso")?.scrollIntoView({ behavior: "smooth" })
               }
             >
-              Explorar Serenidad
+              Explorar casos de uso
             </Button>
           </motion.div>
         </div>
@@ -136,7 +136,7 @@ const HeroSupreme = () => {
               <h2 className="font-display font-extrabold text-3xl md:text-5xl lg:text-6xl text-brand-fg leading-tight tracking-tight">
                 Tu negocio,{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-accent block sm:inline drop-shadow-sm">
-                  pilotado con serenidad
+                  pilotado con calma
                 </span>
               </h2>
             </div>
