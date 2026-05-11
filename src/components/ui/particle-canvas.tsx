@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useCallback } from "react";
-import { useCanvasVisibility } from "@/hooks/use-canvas-visibility";
 
 /**
  * AntiGravityCanvas: capa de fondo con particulas que reaccionan al raton.

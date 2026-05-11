@@ -25,14 +25,14 @@ export function TubesBackground({
     let height = 0;
     let animationFrameId: number;
 
-    const updateSize = () => {
+    const updateSize = (e?: Event) => {
       if (!canvas.parentElement) return;
       const rect = canvas.parentElement.getBoundingClientRect();
       width = canvas.width = rect.width;
       height = canvas.height = rect.height;
       
-      // Re-start loop if we pass to desktop
-      if (window.innerWidth >= 768) {
+      // Re-start loop if we pass to desktop (only on actual resize event)
+      if (e && window.innerWidth >= 768) {
         cancelAnimationFrame(animationFrameId);
         render();
       }
@@ -87,7 +87,7 @@ export function TubesBackground({
 
     let time = 0;
 
-    const render = () => {
+    function render() {
       // Complete stop on mobile to save CPU/Battery
       if (window.innerWidth < 768) {
         return; 
