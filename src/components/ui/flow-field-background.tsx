@@ -20,6 +20,11 @@ export default function NeuralBackground({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isVisible = useCanvasVisibility(containerRef);
+  const isVisibleRef = useRef(isVisible);
+
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+  }, [isVisible]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -116,7 +121,7 @@ export default function NeuralBackground({
     };
 
     const animate = () => {
-      if (!isVisible) {
+      if (!isVisibleRef.current) {
         animationFrameId = requestAnimationFrame(animate);
         return;
       }

@@ -18,6 +18,11 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isVisible = useCanvasVisibility(canvasRef);
+  const isVisibleRef = useRef(isVisible);
+
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+  }, [isVisible]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -52,7 +57,7 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
     let lastTime = 0;
 
     const draw = (timestamp: number) => {
-      if (!isVisible) {
+      if (!isVisibleRef.current) {
         animFrameId = requestAnimationFrame(draw);
         return;
       }
@@ -88,7 +93,7 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
       cancelAnimationFrame(animFrameId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [fontSize, color, characters, fadeOpacity, speed, isVisible]);
+  }, [fontSize, color, characters, fadeOpacity, speed]);
 
   return (
     <canvas

@@ -17,6 +17,11 @@ export function TubesBackground({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isVisible = useCanvasVisibility(containerRef);
+  const isVisibleRef = useRef(isVisible);
+
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+  }, [isVisible]);
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -92,7 +97,7 @@ export function TubesBackground({
 
     const render = () => {
       // Complete stop on mobile or invisible to save CPU/Battery
-      if (window.innerWidth < 768 || !isVisible) {
+      if (window.innerWidth < 768 || !isVisibleRef.current) {
         return; 
       }
       
@@ -191,7 +196,7 @@ export function TubesBackground({
       window.removeEventListener('scroll', updateTarget);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isVisible]);
+  }, []);
 
   return (
     <div className={cn("relative w-full h-full min-h-[400px] overflow-hidden hidden md:block", className)}>

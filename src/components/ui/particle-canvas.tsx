@@ -60,6 +60,11 @@ export const ParticleCanvas: React.FC<Props> = ({
   const lastMoveTimeRef = useRef<number>(Date.now());
   const frameCountRef = useRef<number>(0);
   const isVisible = useCanvasVisibility(containerRef);
+  const isVisibleRef = useRef(isVisible);
+
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+  }, [isVisible]);
 
   const initParticles = useCallback((width: number, height: number) => {
     const particleCount = Math.floor(width * height * getParticleDensity());
@@ -93,7 +98,7 @@ export const ParticleCanvas: React.FC<Props> = ({
   }, [primaryColor]);
 
   const animate = useCallback((time: number) => {
-    if (!isVisible) {
+    if (!isVisibleRef.current) {
       frameIdRef.current = requestAnimationFrame(animate);
       return;
     }
