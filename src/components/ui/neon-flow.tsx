@@ -49,6 +49,7 @@ export function TubesBackground({
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (window.innerWidth < 768) return; // Prevent guiding on mobile
       clientX = e.clientX;
       clientY = e.clientY;
       isIdle = false;
@@ -56,7 +57,20 @@ export function TubesBackground({
       updateTarget();
     };
 
+    // Listen to touch events to prevent accidental guiding on scroll
+    const handleTouchMove = (e: TouchEvent) => {
+      if (window.innerWidth < 768) return;
+      if (e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+        isIdle = false;
+        idleTime = 0;
+        updateTarget();
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('scroll', updateTarget, { passive: true });
 
     // Trail logic
@@ -69,17 +83,27 @@ export function TubesBackground({
 
     const render = () => {
       time += 0.016; 
+      const mobileMode = window.innerWidth < 768;
       
-      if (!isIdle) {
+      // If it's mobile, do not render or process physics to save battery
+      if (window.innerWidth < 768) {
+        ctx.clearRect(0, 0, width, height);
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+      
+      if (!isIdle && !mobileMode) {
         idleTime += 0.016;
         if (idleTime > 2.0) isIdle = true;
       }
 
-      if (isIdle) {
+      if (isIdle || mobileMode) {
         const centerX = width / 2;
         const centerY = height / 2;
-        const wanderX = Math.sin(time * 0.8) * Math.cos(time * 0.5) * (width * 0.4);
-        const wanderY = Math.sin(time * 0.5) * (height * 0.25);
+        // Consistent patrol movement: smooth wide figure 8
+        const wanderX = Math.sin(time * 1.2) * (width * 0.4);
+        const wanderY = Math.sin(time * 0.6) * Math.cos(time * 0.4) * (height * 0.35);
+        
         clientX += ((centerX + wanderX) - clientX) * 0.02;
         clientY += ((centerY + wanderY) - clientY) * 0.02;
         updateTarget();
@@ -100,7 +124,7 @@ export function TubesBackground({
 
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      
+
       for (let i = 0; i < history.length - 1; i++) {
         const p1 = history[i];
         const p2 = history[i + 1];
@@ -127,18 +151,28 @@ export function TubesBackground({
           ctx.stroke();
         };
 
-        // Base dark gelatinous mass (subtle, less saturated, thick)
-        drawSegment(50, "rgba(2, 25, 18, 0.15)", 0);
+        // Base dark gelatinous mass
+        drawSegment(50, "rgba(2, 25, 18, 0.2)", 0);
         
         // Inner mass body
-        drawSegment(25, "rgba(5, 40, 30, 0.3)", 5);
+        drawSegment(25, "rgba(5, 40, 30, 0.4)", 5);
         
-        // Intense professional glow on the small inner lines (perfectly centered now)
-        drawSegment(4, "rgba(0, 229, 184, 0.6)", 40); // Enormous cyan glow
-        drawSegment(1.5, "rgba(255, 255, 255, 0.9)", 15); // Sharp bright core
+        // Intense professional glow
+        drawSegment(6, "rgba(0, 229, 184, 0.8)", 50); 
+        drawSegment(2.5, "rgba(255, 255, 255, 1)", 20); 
       }
       
       ctx.globalAlpha = 1.0;
+      
+      // Draw a highly visible glowing "head" (the ball)
+      const head = history[0];
+      ctx.beginPath();
+      ctx.arc(head.x, head.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowBlur = 30;
+      ctx.shadowColor = "#00E5B8";
+      ctx.fill();
+
       animationFrameId = requestAnimationFrame(render);
     };
 
@@ -147,13 +181,14 @@ export function TubesBackground({
     return () => {
       window.removeEventListener('resize', updateSize);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('scroll', updateTarget);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
-    <div className={cn("relative w-full h-full min-h-[400px] overflow-hidden", className)}>
+    <div className={cn("relative w-full h-full min-h-[400px] overflow-hidden hidden md:block", className)}>
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 block mix-blend-screen opacity-70"

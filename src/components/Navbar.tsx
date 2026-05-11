@@ -17,7 +17,6 @@ const NAV_LINKS: NavLink[] = [
   { label: "Demo", href: "#live-demo" },
   { label: "Flujos", href: "#flujos" },
   { label: "Precios", href: "/precios", isRoute: true },
-  { label: "Contacto", href: "#contacto" },
 ];
 
 interface NavbarProps {
@@ -103,10 +102,12 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden text-brand-fg hover:text-brand-primary p-2 transition-colors"
+        className="md:hidden text-brand-fg hover:text-brand-primary p-2 flex flex-col justify-center items-center gap-[5px] w-10 h-10 relative z-50 transition-colors"
         aria-label="Alternar menú"
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+        <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out ${isOpen ? 'opacity-0 translate-x-3' : ''}`} />
+        <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out ${isOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
       </button>
     </nav>
   );
@@ -122,36 +123,46 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
         </div>
       </header>
 
-      {/* Menú Móvil Fullscreen */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-brand-bg/95 backdrop-blur-xl flex flex-col items-center justify-center pt-20 px-4"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed inset-0 z-40 bg-[#030712] flex flex-col items-center justify-start pt-[120px] pb-24 px-6 overflow-y-auto"
           >
-            <div className="flex flex-col gap-4 w-full max-w-sm">
-              {[...NAV_LINKS, ...extraLinks].map((link) => (
-                <LiquidGlassButton
+            <div className="flex flex-col gap-5 w-full max-w-sm h-max">
+              {[...NAV_LINKS, ...extraLinks].map((link, i) => (
+                <motion.div
                   key={link.href}
-                  onClick={() => handleNav(link.href, link.isRoute)}
-                  className="w-full justify-center text-lg md:text-xl font-display font-medium text-brand-fg/80 hover:text-brand-primary py-3"
-                  glassColor="rgba(255, 255, 255, 0.05)"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 + 0.1, duration: 0.3 }}
                 >
-                  {link.label}
-                </LiquidGlassButton>
+                  <LiquidGlassButton
+                    onClick={() => handleNav(link.href, link.isRoute)}
+                    className="w-full justify-center text-xl font-display font-medium text-white py-5 shadow-lg"
+                    glassColor="rgba(255, 255, 255, 0.1)"
+                  >
+                    {link.label}
+                  </LiquidGlassButton>
+                </motion.div>
               ))}
-              <div className="mt-4">
+              <motion.div 
+                className="mt-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: ([...NAV_LINKS, ...extraLinks].length) * 0.05 + 0.1, duration: 0.3 }}
+              >
                 <LiquidGlassButton
                   onClick={() => handleNav("#contacto")}
-                  className="w-full justify-center font-display font-bold text-lg py-3 text-brand-primary"
-                  glassColor="rgba(0, 229, 184, 0.15)"
+                  className="w-full justify-center font-display font-bold text-2xl py-5 text-brand-primary shadow-[0_0_30px_rgba(0,229,184,0.2)]"
+                  glassColor="rgba(0, 229, 184, 0.2)"
                 >
                   Empezar
                 </LiquidGlassButton>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         )}
