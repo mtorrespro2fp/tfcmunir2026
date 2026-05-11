@@ -4,6 +4,7 @@ import { GlassButton as LiquidGlassButton } from "@/components/ui/apple-tahoe-li
 import { GlassEffect, GlassFilter } from "@/components/ui/liquid-glass";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface NavLink {
   label: string;
@@ -65,60 +66,70 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
     }
   };
 
-  const navContent = (
-    <nav className="container mx-auto px-2 py-2 flex items-center justify-between">
-      <button
-        onClick={goHome}
-        aria-label="NeoFlow — ir al inicio"
-        className="font-display text-xl font-bold text-brand-primary tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 rounded px-4"
-      >
-        NeoFlow
-      </button>
-
-      <div className="hidden md:flex items-center gap-2">
-        {[...NAV_LINKS, ...extraLinks].map((link) => (
-          <LiquidGlassButton
-            key={link.href}
-            size="sm"
-            onClick={() => handleNav(link.href, link.isRoute)}
-            className="text-brand-fg/80 hover:text-brand-primary"
-            glassColor="rgba(255, 255, 255, 0.05)"
-          >
-            {link.label}
-          </LiquidGlassButton>
-        ))}
-      </div>
-
-      <div className="hidden md:block">
-        <LiquidGlassButton
-          size="sm"
-          onClick={() => handleNav("#contacto")}
-          className="text-brand-primary font-bold ml-2"
-          glassColor="rgba(0, 229, 184, 0.15)"
-        >
-          Empezar
-        </LiquidGlassButton>
-      </div>
-
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden text-brand-fg hover:text-brand-primary p-2 flex flex-col justify-center items-center gap-[5px] w-10 h-10 relative z-50 transition-colors"
-        aria-label="Alternar menú"
-      >
-        <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-        <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out ${isOpen ? 'opacity-0 translate-x-3' : ''}`} />
-        <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out ${isOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
-      </button>
-    </nav>
-  );
-
   return (
     <>
       <GlassFilter />
-      <header className="fixed top-0 left-0 right-0 z-50 pt-4 px-4 pointer-events-none">
-        <div className="max-w-5xl mx-auto pointer-events-auto">
-          <GlassEffect className="rounded-full border border-brand-primary/20 bg-brand-bg/40 backdrop-blur-md">
-            {navContent}
+      <header className={cn(
+        "fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+        scrolled ? "pt-4 px-4" : "pt-0 px-0"
+      )}>
+        <div className={cn(
+          "mx-auto pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          scrolled ? "max-w-5xl" : "max-w-full"
+        )}>
+          <GlassEffect className={cn(
+            "transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden",
+            scrolled 
+              ? "rounded-full border border-brand-primary/20 bg-brand-bg/40 backdrop-blur-md shadow-lg" 
+              : "rounded-none border-b border-white/5 bg-[#030712]/80 backdrop-blur-xl"
+          )}>
+            <nav className={cn(
+              "mx-auto flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+              scrolled ? "px-2 py-2 container" : "px-6 py-4 max-w-7xl"
+            )}>
+              <button
+                onClick={goHome}
+                aria-label="NeoFlow — ir al inicio"
+                className="font-display text-xl font-bold text-brand-primary tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 rounded px-4"
+              >
+                NeoFlow
+              </button>
+
+              <div className="hidden md:flex items-center gap-2">
+                {[...NAV_LINKS, ...extraLinks].map((link) => (
+                  <LiquidGlassButton
+                    key={link.href}
+                    size="sm"
+                    onClick={() => handleNav(link.href, link.isRoute)}
+                    className="text-brand-fg/80 hover:text-brand-primary"
+                    glassColor="rgba(255, 255, 255, 0.05)"
+                  >
+                    {link.label}
+                  </LiquidGlassButton>
+                ))}
+              </div>
+
+              <div className="hidden md:block">
+                <LiquidGlassButton
+                  size="sm"
+                  onClick={() => handleNav("#contacto")}
+                  className="text-brand-primary font-bold ml-2"
+                  glassColor="rgba(0, 229, 184, 0.15)"
+                >
+                  Empezar
+                </LiquidGlassButton>
+              </div>
+
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="md:hidden text-brand-fg hover:text-brand-primary p-2 flex flex-col justify-center items-center gap-[5px] w-10 h-10 relative z-50 transition-colors"
+                aria-label="Alternar menú"
+              >
+                <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+                <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out origin-center ${isOpen ? 'opacity-0 scale-x-0' : ''}`} />
+                <span className={`block w-6 h-[2px] bg-current transform transition-all duration-300 ease-in-out ${isOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+              </button>
+            </nav>
           </GlassEffect>
         </div>
       </header>
