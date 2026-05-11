@@ -111,18 +111,16 @@ export default function NeuralBackground({
       canvas.style.height = `${height}px`;
 
       particles = [];
-      for (let i = 0; i < particleCount; i++) {
+      const isMobile = window.innerWidth < 768;
+      // Drastically reduce particles on mobile to maintain 60FPS fluid speed
+      const actualParticleCount = isMobile ? Math.min(100, particleCount) : particleCount;
+      
+      for (let i = 0; i < actualParticleCount; i++) {
         particles.push(new Particle());
       }
     };
 
     const animate = () => {
-      if (window.innerWidth < 768) {
-        ctx.clearRect(0, 0, width, height);
-        animationFrameId = requestAnimationFrame(animate);
-        return;
-      }
-
       ctx.globalCompositeOperation = "destination-out";
       ctx.fillStyle = `rgba(0, 0, 0, ${trailOpacity})`;
       ctx.fillRect(0, 0, width, height);
@@ -143,7 +141,6 @@ export default function NeuralBackground({
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
@@ -170,7 +167,7 @@ export default function NeuralBackground({
   }, [color, trailOpacity, particleCount, speed]);
 
   return (
-    <div ref={containerRef} className={cn("relative w-full h-full overflow-hidden hidden md:block", className)}>
+    <div ref={containerRef} className={cn("relative w-full h-full overflow-hidden", className)}>
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   );

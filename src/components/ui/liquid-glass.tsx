@@ -32,8 +32,10 @@ export const GlassEffect: React.FC<GlassEffectProps> = ({
     >
       {/* Glass Layers */}
       <div
-        className="absolute inset-0 z-0 overflow-hidden rounded-inherit glass-filter-layer"
+        className="absolute inset-0 z-0 overflow-hidden rounded-inherit"
         style={{
+          backdropFilter: "blur(3px)",
+          filter: "url(#glass-distortion)",
           isolation: "isolate",
         }}
       />
