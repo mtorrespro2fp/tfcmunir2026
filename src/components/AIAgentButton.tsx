@@ -3,15 +3,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Bot, X, Send } from "lucide-react";
 
 const RESPONSES: Record<string, string> = {
-  precio:    "Tenemos tres planes: Starter 89€/mes, Profesional 249€/mes y Enterprise 599€/mes. Todos incluyen agente IA, flujos n8n y soporte. ¿Cuál se adapta mejor a tu negocio?",
-  whatsapp:  "Sí, integramos WhatsApp Business API. Tus clientes escriben y el agente responde al instante, 24/7, sin que tengas que hacer nada. 📱",
-  n8n:       "n8n es nuestra herramienta de automatización. Conecta tu formulario web → agente IA → WhatsApp/email/CRM de forma automática. Sin código, sin complicaciones.",
-  web:       "Creamos webs con React + Tailwind CSS, optimizadas para conversión y SEO. Como esta misma que estás viendo ahora — deployada en minutos. 🚀",
-  ia:        "Usamos OpenAI GPT-4o mini para los agentes. Son capaces de responder consultas, cualificar leads y gestionar citas. Se adaptan a tu negocio con un prompt personalizado.",
-  crm:       "Conectamos con Supabase como base de datos. Cada interacción del cliente queda registrada automáticamente. Sin Excel, sin datos perdidos.",
-  hola:      "¡Hola! Soy el agente IA de NeoFlow. Puedo contarte sobre nuestros precios, integraciones de WhatsApp, flujos n8n o webs de alto rendimiento. ¿Por dónde empezamos?",
-  gracias:   "¡De nada! Si tienes más preguntas sobre cómo NeoFlow puede ayudar a tu negocio, aquí estoy. 😊",
-  default:   "Entendido. NeoFlow automatiza las tareas repetitivas de tu negocio: atención al cliente con IA, flujos n8n para WhatsApp/email/CRM, y webs que convierten. ¿Quieres saber más sobre algún módulo en concreto?",
+  precio:      "Tenemos tres planes: Starter 89€/mes, Profesional 249€/mes y Enterprise 599€/mes. Todos incluyen agente IA, flujos n8n y soporte. ¿Cuál se adapta mejor a tu negocio?",
+  whatsapp:    "Sí, integramos WhatsApp Business API. Tus clientes escriben y el agente responde al instante, 24/7, sin que tengas que hacer nada. 📱",
+  n8n:         "n8n es nuestra herramienta de automatización. Conecta tu formulario web → agente IA → WhatsApp/email/CRM de forma automática. Sin código, sin complicaciones.",
+  web:         "Creamos webs con React + Tailwind CSS, optimizadas para conversión y SEO. Como esta misma que estás viendo ahora — deployada en minutos. 🚀",
+  ia:          "Usamos OpenAI GPT-4o mini para los agentes. Son capaces de responder consultas, cualificar leads y gestionar citas. Se adaptan a tu negocio con un prompt personalizado.",
+  crm:         "Conectamos con Supabase como base de datos. Cada interacción del cliente queda registrada automáticamente. Sin Excel, sin datos perdidos.",
+  contacto:    "Para hablar con nosotros directamente, puedes agendar una demo en el botón de 'Empezar' o escribirnos por el formulario de la página principal. ¡Estaremos encantados de atenderte! 🤝",
+  telefono:    "No usamos teléfono tradicional, ya que somos especialistas en automatización por WhatsApp e email. Puedes agendar una videollamada pulsando en 'Empezar'. 📅",
+  email:       "¡Claro! Puedes escribirnos a través del formulario de la web o dejarnos tus datos en la sección 'Empezar' y te contactaremos en menos de 24h. ✉️",
+  ayuda:       "Puedo ayudarte explicándote cómo automatizamos WhatsApp, cómo hacemos webs rápidas, o cómo integramos IAs con tus bases de datos. ¿Qué te interesa más?",
+  informacion: "NeoFlow es una agencia de automatización con IA. Ayudamos a las PYMES a ahorrar tiempo conectando herramientas (WhatsApp, emails, bases de datos) mediante inteligencia artificial. ¿Sobre qué quieres más detalles?",
+  hola:        "¡Hola! Soy el agente IA de NeoFlow. Puedo contarte sobre nuestros precios, integraciones de WhatsApp, flujos n8n o webs de alto rendimiento. ¿Por dónde empezamos?",
+  gracias:     "¡De nada! Si tienes más preguntas sobre cómo NeoFlow puede ayudar a tu negocio, aquí estoy. 😊",
+  default:     "Entendido. NeoFlow automatiza las tareas repetitivas de tu negocio: atención al cliente con IA, flujos n8n para WhatsApp/email/CRM, y webs que convierten. ¿Quieres saber más sobre algún módulo en concreto?",
 };
 
 function getResponse(input: string): string {

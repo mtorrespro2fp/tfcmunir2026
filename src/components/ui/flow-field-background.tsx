@@ -117,6 +117,12 @@ export default function NeuralBackground({
     };
 
     const animate = () => {
+      if (window.innerWidth < 768) {
+        ctx.clearRect(0, 0, width, height);
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
       ctx.globalCompositeOperation = "destination-out";
       ctx.fillStyle = `rgba(0, 0, 0, ${trailOpacity})`;
       ctx.fillRect(0, 0, width, height);
@@ -137,6 +143,7 @@ export default function NeuralBackground({
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
@@ -163,7 +170,7 @@ export default function NeuralBackground({
   }, [color, trailOpacity, particleCount, speed]);
 
   return (
-    <div ref={containerRef} className={cn("relative w-full h-full overflow-hidden", className)}>
+    <div ref={containerRef} className={cn("relative w-full h-full overflow-hidden hidden md:block", className)}>
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   );
