@@ -30,7 +30,16 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 40);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -117,7 +126,7 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
       <GlassFilter />
       <header className="fixed top-0 left-0 right-0 z-50 pt-4 px-4 pointer-events-none">
         <div className="max-w-5xl mx-auto pointer-events-auto">
-          <GlassEffect className="rounded-full border border-brand-primary/20 bg-brand-bg/40 backdrop-blur-md">
+          <GlassEffect className="rounded-full border border-brand-primary/20 bg-brand-bg/40 backdrop-blur-md no-mobile-glass-filter">
             {navContent}
           </GlassEffect>
         </div>

@@ -67,6 +67,16 @@ async function callN8n(data: FormData): Promise<{ ok: boolean; respuesta?: strin
   return { ok: false };
 }
 
+/* ── Node status icon ─────────────────────────────────── */
+const NodeIcon = ({ status }: { status: LogLine["status"] }) => {
+  if (status === "running") return <Loader2 size={13} className="animate-spin text-primary" />;
+  if (status === "done")    return <CheckCircle2 size={13} className="text-neon-green" />;
+  if (status === "error")   return <AlertCircle size={13} className="text-destructive" />;
+  return <Circle size={13} className="text-border" />;
+};
+
+import { useRateLimiter } from "@/hooks/use-rate-limiter";
+
 /* ═══════════════════════════════════════════════════════════
    Component
 ═══════════════════════════════════════════════════════════ */
@@ -77,8 +87,8 @@ const LiveDemoSection = () => {
   const [aiReply, setAiReply] = useState<string>("");
   const [elapsed, setElapsed] = useState(0);
   const [n8nOnline, setN8nOnline] = useState<boolean | null>(null);
-  const [cooldown, setCooldown] = useState(0);
-  const [submitCount, setSubmitCount] = useState(0);
+  
+  const { submitCount, cooldown, increment, isBlocked } = useRateLimiter("neoflow-demo-limit", 3);
   const logEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll log
@@ -86,16 +96,9 @@ const LiveDemoSection = () => {
     logEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [log]);
 
-  useEffect(() => {
-    if (cooldown > 0) {
-      const timer = setTimeout(() => setCooldown(c => c - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [cooldown]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.nombre || !form.email || cooldown > 0 || submitCount >= 3) return;
+    if (!form.nombre || !form.email || isBlocked) return;
 
     const lines = buildLog(form.email, form.negocio);
     setLog(lines.map(l => ({ ...l, status: "pending" })));
@@ -124,8 +127,7 @@ const LiveDemoSection = () => {
 
     setElapsed(Date.now() - startTime);
     setPhase("done");
-    setSubmitCount(c => c + 1);
-    setCooldown(15);
+    increment();
   };
 
   const reset = () => {
@@ -136,12 +138,7 @@ const LiveDemoSection = () => {
   };
 
   /* ── Node status icon ─────────────────────────────────── */
-  const NodeIcon = ({ status }: { status: LogLine["status"] }) => {
-    if (status === "running") return <Loader2 size={13} className="animate-spin text-primary" />;
-    if (status === "done")    return <CheckCircle2 size={13} className="text-neon-green" />;
-    if (status === "error")   return <AlertCircle size={13} className="text-destructive" />;
-    return <Circle size={13} className="text-border" />;
-  };
+  // Moved NodeIcon outside of the main component
 
   return (
     <section id="live-demo" className="relative py-24 md:py-32 overflow-hidden">
@@ -203,7 +200,7 @@ const LiveDemoSection = () => {
                       <div>
                         <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">Nombre *</label>
                         <input
-                          required value={form.nombre}
+                          required value={form.nombre} maxLength={100}
                           onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))}
                           placeholder="Ana García"
                           className="w-full bg-background/50 border border-border rounded px-3 py-2 font-mono text-sm text-foreground placeholder:text-cool-gray/40 focus:outline-none focus:border-primary/60 transition-colors"
@@ -212,7 +209,7 @@ const LiveDemoSection = () => {
                       <div>
                         <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">Email *</label>
                         <input
-                          type="email" required value={form.email}
+                          type="email" required value={form.email} maxLength={254}
                           onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                           placeholder="ana@empresa.com"
                           className="w-full bg-background/50 border border-border rounded px-3 py-2 font-mono text-sm text-foreground placeholder:text-cool-gray/40 focus:outline-none focus:border-primary/60 transition-colors"
@@ -242,7 +239,7 @@ const LiveDemoSection = () => {
                     <div>
                       <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">¿Qué quieres automatizar?</label>
                       <textarea
-                        value={form.mensaje}
+                        value={form.mensaje} maxLength={1000}
                         onChange={e => setForm(f => ({ ...f, mensaje: e.target.value }))}
                         placeholder="Ej: Quiero automatizar las reservas de mi restaurante y enviar confirmación por WhatsApp..."
                         rows={3}
@@ -252,7 +249,7 @@ const LiveDemoSection = () => {
 
                     <Button
                       type="submit"
-                      disabled={phase !== "idle" || cooldown > 0 || submitCount >= 3}
+                      disabled={phase !== "idle" || isBlocked}
                       className="w-full font-mono text-sm uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan py-5 group"
                     >
                       {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Espera ${cooldown}s...` : (
@@ -341,7 +338,7 @@ const LiveDemoSection = () => {
                   {phase === "done" && (
                     <button
                       onClick={reset}
-                      disabled={cooldown > 0 || submitCount >= 3}
+                      disabled={isBlocked}
                       className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline cursor-pointer disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed"
                     >
                       {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Probar de nuevo en ${cooldown}s` : "→ Probar de nuevo"}

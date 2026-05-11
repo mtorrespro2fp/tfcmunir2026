@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useCallback } from "react";
+import { useCanvasVisibility } from "@/hooks/use-canvas-visibility";
 
 /**
  * AntiGravityCanvas: capa de fondo con particulas que reaccionan al raton.
@@ -58,6 +59,7 @@ export const ParticleCanvas: React.FC<Props> = ({
   const frameIdRef = useRef<number>(0);
   const lastMoveTimeRef = useRef<number>(Date.now());
   const frameCountRef = useRef<number>(0);
+  const isVisible = useCanvasVisibility(containerRef);
 
   const initParticles = useCallback((width: number, height: number) => {
     const particleCount = Math.floor(width * height * getParticleDensity());
@@ -91,6 +93,11 @@ export const ParticleCanvas: React.FC<Props> = ({
   }, [primaryColor]);
 
   const animate = useCallback((time: number) => {
+    if (!isVisible) {
+      frameIdRef.current = requestAnimationFrame(animate);
+      return;
+    }
+
     // Throttling logic: 15fps if idle > 2s
     const idleTime = Date.now() - lastMoveTimeRef.current;
     if (idleTime > 2000) {

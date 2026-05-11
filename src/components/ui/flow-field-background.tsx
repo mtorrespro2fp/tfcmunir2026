@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { useCanvasVisibility } from "@/hooks/use-canvas-visibility";
 
 interface NeuralBackgroundProps {
   className?: string;
@@ -18,6 +19,7 @@ export default function NeuralBackground({
 }: NeuralBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useCanvasVisibility(containerRef);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -93,13 +95,6 @@ export default function NeuralBackground({
         this.age = 0;
         this.life = Math.random() * 200 + 100;
       }
-
-      draw(context: CanvasRenderingContext2D) {
-        context.fillStyle = color;
-        const alpha = 1 - Math.abs((this.age / this.life) - 0.5) * 2;
-        context.globalAlpha = alpha;
-        context.fillRect(this.x, this.y, 1.5, 1.5);
-      }
     }
 
     const init = () => {
@@ -121,14 +116,39 @@ export default function NeuralBackground({
     };
 
     const animate = () => {
+      if (!isVisible) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
       ctx.globalCompositeOperation = "destination-out";
       ctx.fillStyle = `rgba(0, 0, 0, ${trailOpacity})`;
       ctx.fillRect(0, 0, width, height);
       ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = color;
 
+      // Group particles by alpha for batch rendering (massive perf boost)
+      const alphaGroups = new Map<number, Particle[]>();
+      
       particles.forEach((p) => {
         p.update();
-        p.draw(ctx);
+        const alpha = 1 - Math.abs((p.age / p.life) - 0.5) * 2;
+        const quantized = Math.round(alpha * 10) / 10;
+        
+        if (!alphaGroups.has(quantized)) {
+          alphaGroups.set(quantized, []);
+        }
+        alphaGroups.get(quantized)!.push(p);
+      });
+
+      alphaGroups.forEach((group, alpha) => {
+        if (alpha <= 0) return;
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        group.forEach(p => {
+          ctx.rect(p.x, p.y, 1.5, 1.5);
+        });
+        ctx.fill();
       });
 
       animationFrameId = requestAnimationFrame(animate);

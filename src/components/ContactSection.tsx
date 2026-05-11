@@ -4,6 +4,8 @@ import { Send, CheckCircle, Loader2, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /* ─── Call n8n webhook ───────────────────────────────────── */
+// TODO: Server-Side Security: Implement rate limiting and payload validation directly 
+// in the n8n webhook workflow to prevent direct endpoint abuse via curl/postman.
 const N8N_ENDPOINT = import.meta.env.VITE_N8N_ENDPOINT;
 
 async function submitToN8n(data: {
@@ -30,25 +32,20 @@ async function submitToN8n(data: {
   return { ok: false };
 }
 
+import { useRateLimiter } from "@/hooks/use-rate-limiter";
+
 const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", business: "", message: "" });
   const [sent, setSent]     = useState(false);
   const [loading, setLoading] = useState(false);
   const [aiReply, setAiReply] = useState<string>("");
   const [n8nLive, setN8nLive] = useState<boolean | null>(null);
-  const [cooldown, setCooldown] = useState(0);
-  const [submitCount, setSubmitCount] = useState(0);
-
-  useEffect(() => {
-    if (cooldown > 0) {
-      const timer = setTimeout(() => setCooldown(c => c - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [cooldown]);
+  
+  const { submitCount, cooldown, increment, isBlocked } = useRateLimiter("neoflow-contact-limit", 3);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || cooldown > 0 || submitCount >= 3) return;
+    if (!form.name || !form.email || isBlocked) return;
     setLoading(true);
 
     const result = await submitToN8n(form);
@@ -61,8 +58,7 @@ const ContactSection = () => {
 
     setLoading(false);
     setSent(true);
-    setSubmitCount(c => c + 1);
-    setCooldown(15);
+    increment();
   };
 
   return (
@@ -123,7 +119,7 @@ const ContactSection = () => {
                 <button
                   onClick={() => { setSent(false); setForm({ name: "", email: "", business: "", message: "" }); }}
                   className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline mt-2 disabled:opacity-50 disabled:no-underline"
-                  disabled={cooldown > 0 || submitCount >= 3}
+                  disabled={isBlocked}
                 >
                   {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Enviar otro mensaje en ${cooldown}s` : "Enviar otro mensaje"}
                 </button>
@@ -134,7 +130,7 @@ const ContactSection = () => {
                   <div>
                     <label className="font-mono text-xs text-cool-gray block mb-2">NOMBRE *</label>
                     <input
-                      type="text" required value={form.name}
+                      type="text" required value={form.name} maxLength={100}
                       onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                       placeholder="Tu nombre"
                       className="w-full bg-background/50 border border-border rounded px-3 py-2 font-mono text-sm text-foreground placeholder:text-cool-gray/50 focus:outline-none focus:border-primary/60 transition-colors"
@@ -143,7 +139,7 @@ const ContactSection = () => {
                   <div>
                     <label className="font-mono text-xs text-cool-gray block mb-2">EMAIL *</label>
                     <input
-                      type="email" required value={form.email}
+                      type="email" required value={form.email} maxLength={254}
                       onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                       placeholder="tu@email.com"
                       className="w-full bg-background/50 border border-border rounded px-3 py-2 font-mono text-sm text-foreground placeholder:text-cool-gray/50 focus:outline-none focus:border-primary/60 transition-colors"
@@ -173,7 +169,7 @@ const ContactSection = () => {
                 <div>
                   <label className="font-mono text-xs text-cool-gray block mb-2">¿QUÉ QUIERES AUTOMATIZAR?</label>
                   <textarea
-                    value={form.message}
+                    value={form.message} maxLength={1000}
                     onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                     placeholder="Cuéntanos tu caso..."
                     rows={4}
@@ -182,7 +178,7 @@ const ContactSection = () => {
                 </div>
 
                 <Button
-                  type="submit" disabled={loading || cooldown > 0 || submitCount >= 3}
+                  type="submit" disabled={loading || isBlocked}
                   className="w-full font-mono text-sm uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan py-5"
                 >
                   {loading ? (

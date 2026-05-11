@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import ProtoSupreme from "./pages/ProtoSupreme.tsx";
+const ProtoSupreme = React.lazy(() => import("./pages/ProtoSupreme.tsx"));
 const Precios = React.lazy(() => import("./pages/Precios.tsx"));
 const Proto1 = React.lazy(() => import("./pages/Proto1.tsx"));
 const Proto2 = React.lazy(() => import("./pages/Proto2.tsx"));

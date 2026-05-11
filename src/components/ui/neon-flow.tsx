@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { cn } from "@/lib/utils";
+import { useCanvasVisibility } from "@/hooks/use-canvas-visibility";
 
 interface TubesBackgroundProps {
   children?: React.ReactNode;
@@ -14,6 +15,8 @@ export function TubesBackground({
   className,
 }: TubesBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useCanvasVisibility(containerRef);
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -23,12 +26,19 @@ export function TubesBackground({
 
     let width = 0;
     let height = 0;
+    let animationFrameId: number;
 
     const updateSize = () => {
       if (!canvas.parentElement) return;
       const rect = canvas.parentElement.getBoundingClientRect();
       width = canvas.width = rect.width;
       height = canvas.height = rect.height;
+      
+      // Re-start loop if we pass to desktop
+      if (window.innerWidth >= 768) {
+        cancelAnimationFrame(animationFrameId);
+        render();
+      }
     };
     
     updateSize();
@@ -78,26 +88,22 @@ export function TubesBackground({
     const history: {x: number, y: number}[] = [];
     for (let i=0; i<segments; i++) history.push({x: width/2, y: height/2});
 
-    let animationFrameId: number;
     let time = 0;
 
     const render = () => {
-      time += 0.016; 
-      const mobileMode = window.innerWidth < 768;
-      
-      // If it's mobile, do not render or process physics to save battery
-      if (window.innerWidth < 768) {
-        ctx.clearRect(0, 0, width, height);
-        animationFrameId = requestAnimationFrame(render);
-        return;
+      // Complete stop on mobile or invisible to save CPU/Battery
+      if (window.innerWidth < 768 || !isVisible) {
+        return; 
       }
       
-      if (!isIdle && !mobileMode) {
+      time += 0.016; 
+      
+      if (!isIdle) {
         idleTime += 0.016;
         if (idleTime > 2.0) isIdle = true;
       }
 
-      if (isIdle || mobileMode) {
+      if (isIdle) {
         const centerX = width / 2;
         const centerY = height / 2;
         // Consistent patrol movement: smooth wide figure 8
@@ -185,7 +191,7 @@ export function TubesBackground({
       window.removeEventListener('scroll', updateTarget);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isVisible]);
 
   return (
     <div className={cn("relative w-full h-full min-h-[400px] overflow-hidden hidden md:block", className)}>

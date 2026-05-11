@@ -193,4 +193,11 @@
   @keyframes flow-dash {
     to { stroke-dashoffset: -24; }
   }
+
+  /* Desactivar filtro SVG pesado solo en navbar para móviles (Fix de rendimiento Android) */
+  @media (max-width: 768px) {
+    .no-mobile-glass-filter > div:first-child {
+      filter: none !important;
+    }
+  }
 }
