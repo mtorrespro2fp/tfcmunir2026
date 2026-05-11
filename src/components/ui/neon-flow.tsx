@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from 'react';
 import { cn } from "@/lib/utils";
-import { useCanvasVisibility } from "@/hooks/use-canvas-visibility";
 
 interface TubesBackgroundProps {
   children?: React.ReactNode;
@@ -16,13 +15,6 @@ export function TubesBackground({
 }: TubesBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isVisible = useCanvasVisibility(containerRef);
-  const isVisibleRef = useRef(isVisible);
-
-  useEffect(() => {
-    isVisibleRef.current = isVisible;
-  }, [isVisible]);
-  
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -96,8 +88,8 @@ export function TubesBackground({
     let time = 0;
 
     const render = () => {
-      // Complete stop on mobile or invisible to save CPU/Battery
-      if (window.innerWidth < 768 || !isVisibleRef.current) {
+      // Complete stop on mobile to save CPU/Battery
+      if (window.innerWidth < 768) {
         return; 
       }
       

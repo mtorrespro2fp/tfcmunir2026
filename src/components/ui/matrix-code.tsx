@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { useCanvasVisibility } from '@/hooks/use-canvas-visibility';
 
 interface MatrixRainProps {
   fontSize?: number;
@@ -17,12 +16,6 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
   speed = 1
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const isVisible = useCanvasVisibility(canvasRef);
-  const isVisibleRef = useRef(isVisible);
-
-  useEffect(() => {
-    isVisibleRef.current = isVisible;
-  }, [isVisible]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -57,10 +50,6 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
     let lastTime = 0;
 
     const draw = (timestamp: number) => {
-      if (!isVisibleRef.current) {
-        animFrameId = requestAnimationFrame(draw);
-        return;
-      }
 
       if (timestamp - lastTime < interval) {
         animFrameId = requestAnimationFrame(draw);

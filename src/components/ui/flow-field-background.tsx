@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { useCanvasVisibility } from "@/hooks/use-canvas-visibility";
 
 interface NeuralBackgroundProps {
   className?: string;
@@ -19,12 +18,6 @@ export default function NeuralBackground({
 }: NeuralBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isVisible = useCanvasVisibility(containerRef);
-  const isVisibleRef = useRef(isVisible);
-
-  useEffect(() => {
-    isVisibleRef.current = isVisible;
-  }, [isVisible]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -121,10 +114,6 @@ export default function NeuralBackground({
     };
 
     const animate = () => {
-      if (!isVisibleRef.current) {
-        animationFrameId = requestAnimationFrame(animate);
-        return;
-      }
 
       ctx.globalCompositeOperation = "destination-out";
       ctx.fillStyle = `rgba(0, 0, 0, ${trailOpacity})`;

@@ -32,20 +32,16 @@ async function submitToN8n(data: {
   return { ok: false };
 }
 
-import { useRateLimiter } from "@/hooks/use-rate-limiter";
-
 const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", business: "", message: "" });
   const [sent, setSent]     = useState(false);
   const [loading, setLoading] = useState(false);
   const [aiReply, setAiReply] = useState<string>("");
   const [n8nLive, setN8nLive] = useState<boolean | null>(null);
-  
-  const { submitCount, cooldown, increment, isBlocked } = useRateLimiter("neoflow-contact-limit", 3);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || isBlocked) return;
+    if (!form.name || !form.email) return;
     setLoading(true);
 
     const result = await submitToN8n(form);
@@ -58,7 +54,6 @@ const ContactSection = () => {
 
     setLoading(false);
     setSent(true);
-    increment();
   };
 
   return (
@@ -118,10 +113,9 @@ const ContactSection = () => {
                 </span>
                 <button
                   onClick={() => { setSent(false); setForm({ name: "", email: "", business: "", message: "" }); }}
-                  className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline mt-2 disabled:opacity-50 disabled:no-underline"
-                  disabled={isBlocked}
+                  className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline mt-2"
                 >
-                  {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Enviar otro mensaje en ${cooldown}s` : "Enviar otro mensaje"}
+                  Enviar otro mensaje
                 </button>
               </div>
             ) : (
@@ -178,7 +172,7 @@ const ContactSection = () => {
                 </div>
 
                 <Button
-                  type="submit" disabled={loading || isBlocked}
+                  type="submit" disabled={loading}
                   className="w-full font-mono text-sm uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan py-5"
                 >
                   {loading ? (
@@ -186,10 +180,6 @@ const ContactSection = () => {
                       <Loader2 size={14} className="animate-spin" />
                       Ejecutando flujo n8n...
                     </span>
-                  ) : submitCount >= 3 ? (
-                    "Límite de envíos alcanzado"
-                  ) : cooldown > 0 ? (
-                    `Espera ${cooldown}s...`
                   ) : (
                     <><Send size={15} className="mr-2" /> &gt; Enviar consulta</>
                   )}

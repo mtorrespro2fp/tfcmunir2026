@@ -75,8 +75,6 @@ const NodeIcon = ({ status }: { status: LogLine["status"] }) => {
   return <Circle size={13} className="text-border" />;
 };
 
-import { useRateLimiter } from "@/hooks/use-rate-limiter";
-
 /* ═══════════════════════════════════════════════════════════
    Component
 ═══════════════════════════════════════════════════════════ */
@@ -87,8 +85,6 @@ const LiveDemoSection = () => {
   const [aiReply, setAiReply] = useState<string>("");
   const [elapsed, setElapsed] = useState(0);
   const [n8nOnline, setN8nOnline] = useState<boolean | null>(null);
-  
-  const { submitCount, cooldown, increment, isBlocked } = useRateLimiter("neoflow-demo-limit", 3);
   const logEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll log
@@ -98,7 +94,7 @@ const LiveDemoSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.nombre || !form.email || isBlocked) return;
+    if (!form.nombre || !form.email) return;
 
     const lines = buildLog(form.email, form.negocio);
     setLog(lines.map(l => ({ ...l, status: "pending" })));
@@ -127,7 +123,6 @@ const LiveDemoSection = () => {
 
     setElapsed(Date.now() - startTime);
     setPhase("done");
-    increment();
   };
 
   const reset = () => {
@@ -249,15 +244,11 @@ const LiveDemoSection = () => {
 
                     <Button
                       type="submit"
-                      disabled={phase !== "idle" || isBlocked}
+                      disabled={phase !== "idle"}
                       className="w-full font-mono text-sm uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan py-5 group"
                     >
-                      {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Espera ${cooldown}s...` : (
-                        <>
-                          <Play size={14} className="mr-2 group-hover:scale-110 transition-transform" />
-                          ▶&nbsp; Ejecutar Flujo n8n
-                        </>
-                      )}
+                      <Play size={14} className="mr-2 group-hover:scale-110 transition-transform" />
+                      ▶&nbsp; Ejecutar Flujo n8n
                     </Button>
 
                     <p className="font-mono text-[10px] text-cool-gray text-center">
@@ -338,10 +329,9 @@ const LiveDemoSection = () => {
                   {phase === "done" && (
                     <button
                       onClick={reset}
-                      disabled={isBlocked}
-                      className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline cursor-pointer disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed"
+                      className="font-mono text-xs text-cool-gray hover:text-primary transition-colors underline cursor-pointer"
                     >
-                      {submitCount >= 3 ? "Límite de envíos alcanzado" : cooldown > 0 ? `Probar de nuevo en ${cooldown}s` : "→ Probar de nuevo"}
+                      → Probar de nuevo
                     </button>
                   )}
                 </motion.div>
