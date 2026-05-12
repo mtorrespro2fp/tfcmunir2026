@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
+import { Mail, FileSpreadsheet, PhoneMissed, FilePenLine, CalendarX, MessageCircleWarning, CopyMinus } from "lucide-react";
 
 const chaosItems = [
-  { label: "📧 Emails sin responder", x: "5%", y: "15%", rotation: -8 },
-  { label: "📊 Excel roto", x: "45%", y: "10%", rotation: 5 },
-  { label: "📞 Llamadas perdidas", x: "15%", y: "55%", rotation: -3 },
-  { label: "📝 Facturas a mano", x: "50%", y: "50%", rotation: 12 },
-  { label: "⏰ Citas olvidadas", x: "5%", y: "80%", rotation: -15 },
-  { label: "💬 WhatsApp sin leer", x: "45%", y: "75%", rotation: 7 },
-  { label: "📋 Datos duplicados", x: "30%", y: "35%", rotation: -6 },
+  { icon: Mail, label: "Emails sin responder", x: "5%", y: "15%", rotation: -8 },
+  { icon: FileSpreadsheet, label: "Excel roto", x: "45%", y: "10%", rotation: 5 },
+  { icon: PhoneMissed, label: "Llamadas perdidas", x: "15%", y: "55%", rotation: -3 },
+  { icon: FilePenLine, label: "Facturas a mano", x: "50%", y: "50%", rotation: 12 },
+  { icon: CalendarX, label: "Citas olvidadas", x: "5%", y: "80%", rotation: -15 },
+  { icon: MessageCircleWarning, label: "WhatsApp sin leer", x: "45%", y: "75%", rotation: 7 },
+  { icon: CopyMinus, label: "Datos duplicados", x: "30%", y: "35%", rotation: -6 },
 ];
 
 const Problem = () => {
@@ -54,10 +55,10 @@ const Problem = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative h-[400px] md:h-[500px] glass-card overflow-hidden"
+          className="relative h-[400px] md:h-[500px] rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent overflow-hidden shadow-2xl backdrop-blur-xl"
         >
           {/* Background noise lines */}
-          <svg className="absolute inset-0 w-full h-full opacity-20">
+          <svg className="absolute inset-0 w-full h-full opacity-30">
             <line x1="10%" y1="20%" x2="60%" y2="45%" stroke="hsl(0 84% 60%)" strokeWidth="1" strokeDasharray="4 4" />
             <line x1="55%" y1="15%" x2="30%" y2="60%" stroke="hsl(0 84% 60%)" strokeWidth="1" strokeDasharray="4 4" />
             <line x1="25%" y1="55%" x2="70%" y2="80%" stroke="hsl(0 84% 60%)" strokeWidth="1" strokeDasharray="4 4" />
@@ -79,8 +80,9 @@ const Problem = () => {
                 transform: `rotate(${item.rotation}deg)`,
               }}
             >
-              <div className="bg-destructive/10 border border-destructive/30 rounded px-3 py-2 font-mono text-xs text-destructive/80 whitespace-nowrap">
-                {item.label}
+              <div className="flex items-center gap-2.5 bg-[#030712]/80 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2.5 font-mono text-sm text-destructive/90 shadow-[0_8px_32px_rgba(255,0,0,0.15)]">
+                <item.icon size={16} className="text-destructive shrink-0" />
+                <span className="whitespace-nowrap">{item.label}</span>
               </div>
             </motion.div>
           ))}

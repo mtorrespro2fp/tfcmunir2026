@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, X } from "lucide-react";
+import { ChevronRight, X, CalendarCheck, Target, Package, Receipt, Bot, Megaphone } from "lucide-react";
 
 /* ─── Data ───────────────────────────────────────────────── */
 interface UseCase {
   id: number;
-  emoji: string;
+  icon: any;
   title: string;
   sector: string;
   description: string;
@@ -34,7 +34,7 @@ const NODE_COLORS: Record<string, string> = {
 const USE_CASES: UseCase[] = [
   {
     id: 1,
-    emoji: "🍽️",
+    icon: CalendarCheck,
     title: "Reservas Automáticas",
     sector: "Restaurantes · Clínicas · Spas",
     description:
@@ -42,16 +42,16 @@ const USE_CASES: UseCase[] = [
     tags: ["webhook", "calendar", "whatsapp"],
     saves: "8h / semana",
     nodes: [
-      { label: "📋 Webhook", type: "webhook", sub: "POST /reserva" },
-      { label: "📅 Calendar", type: "calendar", sub: "Crear evento" },
-      { label: "💬 WhatsApp", type: "whatsapp", sub: "Confirmar cita" },
-      { label: "⏰ Schedule", type: "set", sub: "Recordatorio -2h" },
+      { label: "Webhook", type: "webhook", sub: "POST /reserva" },
+      { label: "Calendar", type: "calendar", sub: "Crear evento" },
+      { label: "WhatsApp", type: "whatsapp", sub: "Confirmar cita" },
+      { label: "Schedule", type: "set", sub: "Recordatorio -2h" },
     ],
     benefit: "0 llamadas para confirmar citas · Reducción de no-shows del 60%",
   },
   {
     id: 2,
-    emoji: "🎯",
+    icon: Target,
     title: "Cualificación de Leads",
     sector: "Ventas · Inmobiliarias · Seguros",
     description:
@@ -59,16 +59,16 @@ const USE_CASES: UseCase[] = [
     tags: ["webhook", "ai", "crm"],
     saves: "12h / semana",
     nodes: [
-      { label: "📋 Webhook", type: "webhook", sub: "Nuevo contacto" },
-      { label: "🤖 AI Score", type: "ai", sub: "GPT-4o · puntuación" },
-      { label: "🔀 IF", type: "if", sub: "Score > 7" },
-      { label: "📊 CRM", type: "crm", sub: "Asignar comercial" },
+      { label: "Webhook", type: "webhook", sub: "Nuevo contacto" },
+      { label: "AI Score", type: "ai", sub: "GPT-4o · puntuación" },
+      { label: "IF", type: "if", sub: "Score > 7" },
+      { label: "CRM", type: "crm", sub: "Asignar comercial" },
     ],
     benefit: "Solo hablas con leads calientes · Conversión +35%",
   },
   {
     id: 3,
-    emoji: "📦",
+    icon: Package,
     title: "Seguimiento de Pedidos",
     sector: "E-commerce · Tiendas · Logística",
     description:
@@ -76,16 +76,16 @@ const USE_CASES: UseCase[] = [
     tags: ["webhook", "email", "whatsapp"],
     saves: "6h / semana",
     nodes: [
-      { label: "🔔 Trigger", type: "webhook", sub: "Estado cambia" },
-      { label: "⚙️ Set", type: "set", sub: "Formatear mensaje" },
-      { label: "✉️ Email", type: "email", sub: "Notificación" },
-      { label: "💬 WhatsApp", type: "whatsapp", sub: "SMS alternativo" },
+      { label: "Trigger", type: "webhook", sub: "Estado cambia" },
+      { label: "Set", type: "set", sub: "Formatear mensaje" },
+      { label: "Email", type: "email", sub: "Notificación" },
+      { label: "WhatsApp", type: "whatsapp", sub: "SMS alternativo" },
     ],
     benefit: "75% menos consultas de soporte · NPS +22 puntos",
   },
   {
     id: 4,
-    emoji: "🧾",
+    icon: Receipt,
     title: "Facturación Automática",
     sector: "Autónomos · Agencias · Freelances",
     description:
@@ -93,16 +93,16 @@ const USE_CASES: UseCase[] = [
     tags: ["set", "email", "sheet"],
     saves: "5h / mes",
     nodes: [
-      { label: "🔔 Trigger", type: "webhook", sub: "Venta cerrada" },
-      { label: "📄 PDF Set", type: "set", sub: "Generar factura" },
-      { label: "📊 Sheets", type: "sheet", sub: "Registrar cobro" },
-      { label: "✉️ Email", type: "email", sub: "Enviar PDF" },
+      { label: "Trigger", type: "webhook", sub: "Venta cerrada" },
+      { label: "PDF Set", type: "set", sub: "Generar factura" },
+      { label: "Sheets", type: "sheet", sub: "Registrar cobro" },
+      { label: "Email", type: "email", sub: "Enviar PDF" },
     ],
     benefit: "Cero facturas olvidadas · Cobros más rápidos",
   },
   {
     id: 5,
-    emoji: "🤖",
+    icon: Bot,
     title: "Atención al Cliente 24/7",
     sector: "Cualquier negocio local",
     description:
@@ -110,16 +110,16 @@ const USE_CASES: UseCase[] = [
     tags: ["webhook", "ai", "whatsapp"],
     saves: "20h / semana",
     nodes: [
-      { label: "💬 Chat/WA", type: "whatsapp", sub: "Mensaje entrante" },
-      { label: "🤖 AI Agent", type: "ai", sub: "GPT-4o · FAQ" },
-      { label: "🔀 IF Resuelto", type: "if", sub: "¿Necesita humano?" },
-      { label: "✅ Respond", type: "respond", sub: "Respuesta o alerta" },
+      { label: "Chat/WA", type: "whatsapp", sub: "Mensaje entrante" },
+      { label: "AI Agent", type: "ai", sub: "GPT-4o · FAQ" },
+      { label: "IF Resuelto", type: "if", sub: "¿Necesita humano?" },
+      { label: "Respond", type: "respond", sub: "Respuesta o alerta" },
     ],
     benefit: "Respuesta instantánea · Escalado inteligente al equipo",
   },
   {
     id: 6,
-    emoji: "📣",
+    icon: Megaphone,
     title: "Marketing Automatizado",
     sector: "Academias · Tiendas · Servicios",
     description:
@@ -127,10 +127,10 @@ const USE_CASES: UseCase[] = [
     tags: ["ai", "social", "set"],
     saves: "10h / semana",
     nodes: [
-      { label: "⏰ Schedule", type: "set", sub: "Trigger semanal" },
-      { label: "🤖 AI Copy", type: "ai", sub: "Generar contenido" },
-      { label: "📣 Social", type: "social", sub: "Publicar post" },
-      { label: "📊 Analytics", type: "sheet", sub: "Registrar métricas" },
+      { label: "Schedule", type: "set", sub: "Trigger semanal" },
+      { label: "AI Copy", type: "ai", sub: "Generar contenido" },
+      { label: "Social", type: "social", sub: "Publicar post" },
+      { label: "Analytics", type: "sheet", sub: "Registrar métricas" },
     ],
     benefit: "Presencia constante sin esfuerzo · Engagement +40%",
   },
@@ -138,21 +138,22 @@ const USE_CASES: UseCase[] = [
 
 /* ─── Mini flow component ───────────────────────────────── */
 const MiniFlow = ({ nodes }: { nodes: UseCase["nodes"] }) => (
-  <div className="flex items-center gap-1 flex-wrap mt-3 overflow-x-auto pb-1 scrollbar-none">
+  <div className="flex items-center gap-1.5 flex-wrap mt-4 overflow-x-auto pb-1 scrollbar-none">
     {nodes.map((node, i) => (
-      <div key={i} className="flex items-center gap-1">
-        <span
-          className="font-mono text-[9px] px-1.5 py-0.5 rounded border whitespace-nowrap"
+      <div key={i} className="flex items-center gap-1.5">
+        <div
+          className="flex items-center gap-1.5 font-mono text-[10px] font-medium px-2 py-1 rounded-md border backdrop-blur-sm shadow-[0_2px_10px_rgba(0,0,0,0.1)]"
           style={{
-            color: NODE_COLORS[node.type] ?? "#aaa",
-            borderColor: (NODE_COLORS[node.type] ?? "#aaa") + "44",
-            backgroundColor: (NODE_COLORS[node.type] ?? "#aaa") + "11",
+            color: NODE_COLORS[node.type] ?? "#e2e8f0",
+            borderColor: (NODE_COLORS[node.type] ?? "#aaa") + "25",
+            backgroundColor: (NODE_COLORS[node.type] ?? "#aaa") + "10",
           }}
         >
+          <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: NODE_COLORS[node.type] ?? "#e2e8f0", boxShadow: `0 0 6px ${NODE_COLORS[node.type] ?? "#e2e8f0"}` }} />
           {node.label}
-        </span>
+        </div>
         {i < nodes.length - 1 && (
-          <ChevronRight size={10} className="text-border shrink-0" />
+          <ChevronRight size={12} className="text-white/20 shrink-0" />
         )}
       </div>
     ))}
@@ -179,7 +180,9 @@ const DetailModal = ({ uc, onClose }: { uc: UseCase; onClose: () => void }) => (
         <X size={18} />
       </button>
 
-      <div className="text-4xl mb-4">{uc.emoji}</div>
+      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 text-primary shadow-lg backdrop-blur-md">
+        <uc.icon size={24} className="text-gradient-cyan" />
+      </div>
       <span className="font-mono text-[10px] text-primary uppercase tracking-widest">{uc.sector}</span>
       <h3 className="font-mono text-xl font-bold text-light-slate mt-1 mb-3">{uc.title}</h3>
       <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">{uc.description}</p>
@@ -270,14 +273,18 @@ const UseCasesSection = () => {
               initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ delay: 0.1 + i * 0.08 }}
               onClick={() => setSelected(uc)}
-              className="glass-card-cyan p-6 cursor-pointer group hover:border-primary/60 transition-all duration-300 hover:-translate-y-1"
+              className="relative p-6 rounded-2xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent cursor-pointer group hover:border-primary/40 transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_40px_rgba(0,229,184,0.1)] backdrop-blur-xl overflow-hidden"
             >
-              <div className="flex items-start justify-between mb-4">
-                <span className="text-3xl">{uc.emoji}</span>
-                <span className="font-mono text-[9px] text-cool-gray uppercase border border-border/60 px-2 py-1 rounded">
-                  {uc.saves} saved
-                </span>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10">
+                <div className="flex items-start justify-between mb-5">
+                  <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-primary">
+                    <uc.icon size={20} />
+                  </div>
+                  <span className="font-mono text-[10px] font-semibold text-cool-gray uppercase border border-white/10 bg-black/20 backdrop-blur-md px-2.5 py-1.5 rounded-md">
+                    {uc.saves} saved
+                  </span>
+                </div>
 
               <h3 className="font-mono text-sm font-bold text-light-slate mb-2 group-hover:text-primary transition-colors">
                 {uc.title}
@@ -298,6 +305,7 @@ const UseCasesSection = () => {
                 <span className="font-mono text-[10px] text-primary group-hover:underline">
                   Ver flujo →
                 </span>
+              </div>
               </div>
             </motion.div>
           ))}

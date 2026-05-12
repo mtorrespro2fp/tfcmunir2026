@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, CheckCircle2, Circle, Loader2, Zap, AlertCircle } from "lucide-react";
+import { Play, CheckCircle2, Circle, Loader2, Zap, AlertCircle, Webhook, Settings2, GitBranch, Bot, Database, Mail, CheckSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /* ─── Types ─────────────────────────────────────────────── */
@@ -33,13 +33,13 @@ const NODE_COLORS: Record<string, string> = {
 
 /* ─── Mock execution log ─────────────────────────────────── */
 const buildLog = (email: string, negocio: string): LogLine[] => [
-  { id: 1, ms: 0,    node: "📋 Webhook",       nodeType: "webhook", message: "POST /neoflow-contacto — datos recibidos",           status: "pending" },
-  { id: 2, ms: 180,  node: "⚙️  Set",           nodeType: "set",     message: "Campos normalizados: nombre, email, mensaje",       status: "pending" },
-  { id: 3, ms: 350,  node: "🔀 IF Clasificar", nodeType: "if",      message: "Evaluando tipo de consulta…",                       status: "pending" },
-  { id: 4, ms: 720,  node: "🤖 AI Agent",      nodeType: "ai",      message: "GPT-4o-mini procesando — sector: " + (negocio||"general"), status: "pending" },
-  { id: 5, ms: 1050, node: "📊 CRM",            nodeType: "crm",     message: `Lead #NF-${Date.now().toString().slice(-4)} creado para ${email}`, status: "pending" },
-  { id: 6, ms: 1280, node: "✉️  Email",          nodeType: "email",   message: `Confirmación enviada → ${email}`,                  status: "pending" },
-  { id: 7, ms: 1450, node: "✅ Respond",        nodeType: "respond", message: "HTTP 200 OK · flujo completado",                   status: "pending" },
+  { id: 1, ms: 0,    node: "Webhook",       nodeType: "webhook", message: "POST /neoflow-contacto — datos recibidos",           status: "pending" },
+  { id: 2, ms: 180,  node: "Set",           nodeType: "set",     message: "Campos normalizados: nombre, email, mensaje",       status: "pending" },
+  { id: 3, ms: 350,  node: "IF Clasificar", nodeType: "if",      message: "Evaluando tipo de consulta…",                       status: "pending" },
+  { id: 4, ms: 720,  node: "AI Agent",      nodeType: "ai",      message: "GPT-4o-mini procesando — sector: " + (negocio||"general"), status: "pending" },
+  { id: 5, ms: 1050, node: "CRM",           nodeType: "crm",     message: `Lead #NF-${Date.now().toString().slice(-4)} creado para ${email}`, status: "pending" },
+  { id: 6, ms: 1280, node: "Email",         nodeType: "email",   message: `Confirmación enviada → ${email}`,                  status: "pending" },
+  { id: 7, ms: 1450, node: "Respond",       nodeType: "respond", message: "HTTP 200 OK · flujo completado",                   status: "pending" },
 ];
 
 /* ─── Helper: call real n8n, fall back gracefully ────────── */
@@ -343,21 +343,21 @@ const LiveDemoSection = () => {
           <motion.div
             initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ delay: 0.4 }}
-            className="glass-card p-6 md:p-8"
+            className="relative p-6 md:p-8 rounded-2xl border border-white/5 bg-[#030712]/60 shadow-[0_8px_32px_rgba(0,0,0,0.2)] backdrop-blur-xl"
           >
-            <p className="font-mono text-[10px] text-cool-gray uppercase tracking-widest mb-6">
-              // flujo: neoflow-contacto · nodos: 7 · estado: activo
+            <p className="font-mono text-[10px] text-cool-gray uppercase tracking-widest mb-6 border-b border-white/5 pb-4">
+              <span className="text-primary mr-2">●</span> flujo: neoflow-contacto · nodos: 7 · estado: activo
             </p>
 
             <div className="space-y-1">
               {[
-                { nodeType: "webhook", label: "📋 Webhook", sub: "POST /neoflow-contacto", id: 1 },
-                { nodeType: "set",     label: "⚙️  Set Node",  sub: "Normalizar campos",       id: 2 },
-                { nodeType: "if",      label: "🔀 IF",         sub: "Clasificar consulta",      id: 3 },
-                { nodeType: "ai",      label: "🤖 AI Agent",   sub: "GPT-4o-mini · análisis",   id: 4 },
-                { nodeType: "crm",     label: "📊 CRM Set",    sub: "Crear lead / registro",    id: 5 },
-                { nodeType: "email",   label: "✉️  Email",      sub: "Enviar confirmación",      id: 6 },
-                { nodeType: "respond", label: "✅ Respond",    sub: "HTTP 200 · JSON response", id: 7 },
+                { nodeType: "webhook", label: "Webhook",   sub: "POST /neoflow-contacto", id: 1, icon: Webhook },
+                { nodeType: "set",     label: "Set Node",  sub: "Normalizar campos",       id: 2, icon: Settings2 },
+                { nodeType: "if",      label: "IF",        sub: "Clasificar consulta",      id: 3, icon: GitBranch },
+                { nodeType: "ai",      label: "AI Agent",  sub: "GPT-4o-mini · análisis",   id: 4, icon: Bot },
+                { nodeType: "crm",     label: "CRM Set",   sub: "Crear lead / registro",    id: 5, icon: Database },
+                { nodeType: "email",   label: "Email",     sub: "Enviar confirmación",      id: 6, icon: Mail },
+                { nodeType: "respond", label: "Respond",   sub: "HTTP 200 · JSON response", id: 7, icon: CheckSquare },
               ].map((node, i) => {
                 const logLine = log.find(l => l.id === node.id);
                 const status  = logLine?.status ?? "pending";
@@ -378,20 +378,21 @@ const LiveDemoSection = () => {
                     >
                       {/* Node type dot */}
                       <div
-                        className="w-8 h-8 rounded flex items-center justify-center text-sm shrink-0 transition-all"
+                        className="w-8 h-8 rounded flex items-center justify-center text-sm shrink-0 transition-all shadow-inner"
                         style={{
-                          backgroundColor: isActive || isDone ? color + "33" : "#ffffff08",
-                          border: `1px solid ${isActive || isDone ? color : "#ffffff15"}`,
+                          backgroundColor: isActive || isDone ? color + "20" : "#ffffff05",
+                          border: `1px solid ${isActive || isDone ? color + "60" : "#ffffff10"}`,
+                          boxShadow: isActive ? `0 0 12px ${color}40` : "none"
                         }}
                       >
                         {isActive ? <Loader2 size={14} className="animate-spin" style={{ color }} />
                           : isDone  ? <CheckCircle2 size={14} style={{ color }} />
-                          : <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color + "55" }} />}
+                          : <node.icon size={14} style={{ color: color + "aa" }} />}
                       </div>
 
-                      <div className="flex-1 min-w-0">
-                        <p className="font-mono text-xs font-semibold text-light-slate truncate">{node.label}</p>
-                        <p className="font-mono text-[10px] text-cool-gray truncate">{node.sub}</p>
+                      <div className="flex-1 min-w-0 flex items-center gap-2">
+                        <p className="font-mono text-xs font-semibold text-light-slate">{node.label}</p>
+                        <p className="font-mono text-[10px] text-cool-gray/70 truncate hidden sm:block">— {node.sub}</p>
                       </div>
 
                       {isDone && (
