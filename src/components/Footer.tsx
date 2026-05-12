@@ -1,6 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.getElementById("contacto");
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (window.location.hash !== "#contacto") {
+          window.history.pushState(null, "", "#contacto");
+        }
+      }, 100);
+    } else {
+      const el = document.getElementById("contacto");
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (window.location.hash !== "#contacto") {
+        window.history.pushState(null, "", "#contacto");
+      }
+    }
+  };
+
   return (
     <footer className="border-t border-border/50 py-12">
       <div className="container mx-auto px-6">
@@ -33,6 +56,7 @@ const Footer = () => {
             <span className="text-cool-gray/20 hidden sm:inline">|</span>
             <a
               href="#contacto"
+              onClick={handleContactClick}
               className="font-mono text-xs text-cool-gray/60 hover:text-primary transition-colors px-3 py-1.5 rounded-full hover:bg-primary/5"
             >
               Contacto
