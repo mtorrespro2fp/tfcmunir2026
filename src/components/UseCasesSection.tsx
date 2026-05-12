@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, X, CalendarCheck, Target, Package, Receipt, Bot, Megaphone } from "lucide-react";
+import { ChevronRight, X, CalendarCheck, Target, Package, Receipt, Bot, Megaphone, ArrowDown } from "lucide-react";
 
 /* ─── Data ───────────────────────────────────────────────── */
 interface UseCase {
@@ -321,26 +321,23 @@ const UseCasesSection = () => {
           ))}
         </div>
 
-        {/* Total savings */}
+        {/* Scroll indicator to demo */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ delay: 0.3 }}
-          className="mt-10 glass-card p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left"
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+          viewport={{ once: true }} transition={{ delay: 0.5 }}
+          className="mt-16 flex flex-col items-center justify-center gap-3 cursor-pointer group"
+          onClick={() => document.getElementById("live-demo")?.scrollIntoView({ behavior: "smooth" })}
         >
-          <div>
-            <p className="font-mono text-[10px] md:text-xs text-cool-gray uppercase tracking-widest mb-2 md:mb-1">
-              Ahorro total estimado implementando todos los flujos
-            </p>
-            <p className="font-mono text-xl md:text-2xl font-bold text-light-slate leading-tight">
-              <span className="text-gradient-cyan block md:inline">61 horas / semana</span> liberadas por empleado
-            </p>
-          </div>
-          <button
-            onClick={() => document.getElementById("live-demo")?.scrollIntoView({ behavior: "smooth" })}
-            className="shrink-0 font-mono text-sm uppercase tracking-wider bg-primary text-primary-foreground px-6 py-3 rounded hover:bg-primary/90 transition-colors glow-cyan"
+          <span className="font-mono text-[10px] md:text-xs text-cool-gray uppercase tracking-widest group-hover:text-primary transition-colors">
+            Probar demo abajo
+          </span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="text-primary opacity-80"
           >
-            ▶ Probar demo
-          </button>
+            <ArrowDown size={24} />
+          </motion.div>
         </motion.div>
       </div>
 
