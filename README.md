@@ -1,73 +1,40 @@
-# Welcome to your Lovable project
+# NeoFlow — Motor de IA para Negocios Locales 🚀
 
-## Project info
+NeoFlow es una plataforma web de alto rendimiento diseñada para automatizar flujos de trabajo en negocios locales utilizando agentes de Inteligencia Artificial y n8n. 
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Este proyecto se enfoca en ofrecer una experiencia de usuario (UX) premium y unas interfaces visuales (UI) de altísima calidad ("SaaS Aesthetic") con animaciones fluidas, físicas de inercia y efectos de cristal esmerilado (*glassmorphism*) avanzados.
 
-## How can I edit this code?
+## 🛠️ Tecnologías Principales
+- **React + Vite**
+- **TypeScript**
+- **Tailwind CSS**
+- **Framer Motion** (Animaciones UI)
+- **Lenis** (Smooth Scroll fluido)
+- **Lucide React** (Iconografía)
 
-There are several ways of editing your application.
+## 📚 Referencias y Recursos UI
 
-**Use Lovable**
+Para lograr el aspecto premium de esta web, nos hemos inspirado y utilizado componentes avanzados de código abierto de la comunidad de **21st.dev**. Agradecimientos a sus creadores originales:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- [Flow Field Background](https://21st.dev/community/components/easemize/flow-field-background/default) — *easemize*
+- [Apple Tahoe Liquid Glass Button](https://21st.dev/community/components/easemize/apple-tahoe-liquid-glass-button/default) — *easemize*
+- [Particle Effect for Hero](https://21st.dev/community/components/avanishverma4/particle-effect-for-hero/default) — *avanishverma4*
+- [Logos3 (Trust Badges)](https://21st.dev/community/components/shadcnblockscom/logos3/default) — *shadcnblockscom*
+- [Pricing Section 4](https://21st.dev/community/components/ui-layouts/pricing-section-4/default) — *ui-layouts*
+- [Liquid Glass Cards](https://21st.dev/community/components/suraj-xd/liquid-glass/default) — *suraj-xd*
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🏗️ Créditos de Estructura
+La estructura de archivos base (`scaffolding`) del proyecto fue generada inicialmente como un borrador utilizando [Lovable](https://lovable.dev/). Todo el diseño personalizado, la implementación de componentes avanzados, físicas, animaciones y la lógica de negocio han sido refactorizados y desarrollados de forma manual posteriormente.
 
-**Use your preferred IDE**
+## 🚀 Instalación y Despliegue Local
+Si deseas probar o modificar este proyecto en tu entorno local:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+1. Clona este repositorio.
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Inicia el servidor de desarrollo en vivo:
+   ```bash
+   npm run dev
+   ```
