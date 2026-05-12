@@ -184,7 +184,7 @@ const DetailModal = ({ uc, onClose }: { uc: UseCase; onClose: () => void }) => {
         </button>
 
         <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-primary shadow-[0_4px_20px_rgba(0,229,184,0.15)] backdrop-blur-md">
-          <Icon size={28} className="text-gradient-cyan" />
+          <Icon size={28} />
         </div>
         <span className="font-mono text-[10px] font-semibold text-primary uppercase tracking-widest">{uc.sector}</span>
       <h3 className="font-mono text-xl font-bold text-light-slate mt-1 mb-3">{uc.title}</h3>
