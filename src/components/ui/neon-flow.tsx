@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 interface TubesBackgroundProps {
   children?: React.ReactNode;
   className?: string;
-  enableClickInteraction?: boolean;
 }
 
 export function TubesBackground({ 
@@ -141,42 +140,43 @@ export function TubesBackground({
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
 
-      for (let i = 0; i < history.length - 1; i++) {
-        const p1 = history[i];
-        const p2 = history[i + 1];
-        
-        const prev = i > 0 ? history[i - 1] : p1;
-        const xc1 = (prev.x + p1.x) / 2;
-        const yc1 = (prev.y + p1.y) / 2;
-        const xc2 = (p1.x + p2.x) / 2;
-        const yc2 = (p1.y + p2.y) / 2;
+      const drawLayer = (width: number, color: string, blur: number) => {
+        ctx.shadowBlur = blur;
+        ctx.shadowColor = blur > 0 ? "#00E5B8" : "transparent";
+        ctx.lineWidth = width;
+        ctx.strokeStyle = color;
 
-        const opacity = Math.pow(1 - (i / history.length), 1.2); 
-        if (opacity <= 0.01) continue;
+        for (let i = 0; i < history.length - 1; i++) {
+          const opacity = Math.pow(1 - (i / history.length), 1.2); 
+          if (opacity <= 0.01) continue;
 
-        ctx.globalAlpha = opacity;
+          const p1 = history[i];
+          const p2 = history[i + 1];
+          const prev = i > 0 ? history[i - 1] : p1;
+          const xc1 = (prev.x + p1.x) / 2;
+          const yc1 = (prev.y + p1.y) / 2;
+          const xc2 = (p1.x + p2.x) / 2;
+          const yc2 = (p1.y + p2.y) / 2;
 
-        const drawSegment = (width: number, color: string, blur: number) => {
+          ctx.globalAlpha = opacity;
           ctx.beginPath();
           ctx.moveTo(xc1, yc1);
           ctx.quadraticCurveTo(p1.x, p1.y, xc2, yc2);
-          ctx.lineWidth = width;
-          ctx.strokeStyle = color;
-          ctx.shadowBlur = blur;
-          ctx.shadowColor = blur > 0 ? "#00E5B8" : "transparent";
           ctx.stroke();
-        };
+        }
+      };
 
-        // Base dark gelatinous mass
-        drawSegment(50, "rgba(2, 25, 18, 0.2)", 0);
-        
-        // Inner mass body
-        drawSegment(25, "rgba(5, 40, 30, 0.4)", 5);
-        
-        // Intense professional glow
-        drawSegment(6, "rgba(0, 229, 184, 0.8)", 50); 
-        drawSegment(2.5, "rgba(255, 255, 255, 1)", 20); 
-      }
+      // Base dark gelatinous mass
+      drawLayer(50, "rgba(2, 25, 18, 0.2)", 0);
+      
+      // Inner mass body
+      drawLayer(25, "rgba(5, 40, 30, 0.4)", 5);
+      
+      // Intense professional glow
+      drawLayer(6, "rgba(0, 229, 184, 0.8)", 50); 
+      drawLayer(2.5, "rgba(255, 255, 255, 1)", 20); 
+
+      ctx.shadowBlur = 0;
       
       ctx.globalAlpha = 1.0;
       
@@ -200,7 +200,7 @@ export function TubesBackground({
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('scroll', updateTarget);
       cancelAnimationFrame(animationFrameId);
-      if (containerRef.current) observer.unobserve(containerRef.current);
+      observer.disconnect(); // disconnect() es más seguro que unobserve() al desmontar
     };
   }, []);
 

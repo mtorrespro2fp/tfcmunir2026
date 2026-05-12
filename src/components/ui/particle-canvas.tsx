@@ -210,9 +210,12 @@ export const ParticleCanvas: React.FC<Props> = ({
         });
       }, { threshold: 0 });
       observer.observe(containerRef.current);
+      // El observer arranca el loop al detectar visibilidad inicial
+    } else {
+      // Fallback si el ref no está disponible
+      frameIdRef.current = requestAnimationFrame(animate);
     }
-    
-    frameIdRef.current = requestAnimationFrame(animate);
+
     return () => {
       cancelAnimationFrame(frameIdRef.current);
       if (observer) observer.disconnect();

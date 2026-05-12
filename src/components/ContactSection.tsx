@@ -42,6 +42,9 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email) return;
+    // Validación robusta de email: previene bypass del atributo HTML5 via consola
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(form.email)) return;
     setLoading(true);
 
     const result = await submitToN8n(form);
