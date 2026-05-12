@@ -81,7 +81,7 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
             "transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden",
             scrolled 
               ? "rounded-full border border-brand-primary/20 bg-brand-bg/40 backdrop-blur-md shadow-lg" 
-              : "rounded-none border-b border-white/5 bg-[#030712]/80 backdrop-blur-xl"
+              : "rounded-none border-b border-white/10 bg-[#030712]/40 backdrop-blur-3xl backdrop-saturate-150"
           )}>
             <nav className={cn(
               "mx-auto flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
