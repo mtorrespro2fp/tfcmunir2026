@@ -85,11 +85,16 @@ const LiveDemoSection = () => {
   const [aiReply, setAiReply] = useState<string>("");
   const [elapsed, setElapsed] = useState(0);
   const [n8nOnline, setN8nOnline] = useState<boolean | null>(null);
-  const logEndRef = useRef<HTMLDivElement>(null);
+  const logContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll log
+  // Auto-scroll log smoothly without moving the window
   useEffect(() => {
-    logEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (logContainerRef.current) {
+      logContainerRef.current.scrollTo({
+        top: logContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [log]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -284,7 +289,7 @@ const LiveDemoSection = () => {
                   </div>
 
                   {/* Execution log */}
-                  <div className="space-y-2 mb-6 max-h-64 overflow-y-auto pr-1">
+                  <div ref={logContainerRef} className="space-y-2 mb-6 max-h-64 overflow-y-auto pr-1">
                     {log.map(line => (
                       <motion.div
                         key={line.id}
@@ -308,7 +313,6 @@ const LiveDemoSection = () => {
                         </span>
                       </motion.div>
                     ))}
-                    <div ref={logEndRef} />
                   </div>
 
                   {/* AI response */}
