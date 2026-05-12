@@ -40,16 +40,19 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
   useEffect(() => {
     const handlePopState = () => {
       const hash = window.location.hash;
-      if (hash) {
-        const el = document.querySelector(hash);
-        el?.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else if (location.pathname === "/") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      setTimeout(() => {
+        if (hash) {
+          const el = document.querySelector(hash);
+          el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          // Si no hay hash, volver arriba del todo
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, 50);
     };
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, [location.pathname]);
+  }, []);
 
   const handleNav = (href: string, isRoute?: boolean) => {
     if (isRoute) {
