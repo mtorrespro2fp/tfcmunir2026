@@ -58,6 +58,7 @@ export const ParticleCanvas: React.FC<Props> = ({
   const frameIdRef = useRef<number>(0);
   const lastMoveTimeRef = useRef<number>(Date.now());
   const frameCountRef = useRef<number>(0);
+  const isVisibleRef = useRef<boolean>(true);
 
   const initParticles = useCallback((width: number, height: number) => {
     const particleCount = Math.floor(width * height * getParticleDensity());
@@ -91,6 +92,7 @@ export const ParticleCanvas: React.FC<Props> = ({
   }, [primaryColor]);
 
   const animate = useCallback((time: number) => {
+    if (!isVisibleRef.current) return;
 
     // Throttling logic: 15fps if idle > 2s
     const idleTime = Date.now() - lastMoveTimeRef.current;
@@ -191,8 +193,25 @@ export const ParticleCanvas: React.FC<Props> = ({
   }, [initParticles]);
 
   useEffect(() => {
+    let observer: IntersectionObserver;
+    if (containerRef.current) {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isVisibleRef.current = entry.isIntersecting;
+          if (entry.isIntersecting) {
+            cancelAnimationFrame(frameIdRef.current);
+            frameIdRef.current = requestAnimationFrame(animate);
+          }
+        });
+      }, { threshold: 0 });
+      observer.observe(containerRef.current);
+    }
+    
     frameIdRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frameIdRef.current);
+    return () => {
+      cancelAnimationFrame(frameIdRef.current);
+      if (observer) observer.disconnect();
+    };
   }, [animate]);
 
   // Track mouse globally so the effect feels alive across the whole page-section

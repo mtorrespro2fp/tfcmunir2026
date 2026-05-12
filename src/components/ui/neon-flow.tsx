@@ -32,7 +32,7 @@ export function TubesBackground({
       height = canvas.height = rect.height;
       
       // Re-start loop if we pass to desktop (only on actual resize event)
-      if (e && window.innerWidth >= 768) {
+      if (e && window.innerWidth >= 768 && isVisible) {
         cancelAnimationFrame(animationFrameId);
         render();
       }
@@ -40,6 +40,19 @@ export function TubesBackground({
     
     updateSize();
     window.addEventListener('resize', updateSize);
+
+    let isVisible = true;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && window.innerWidth >= 768) {
+          cancelAnimationFrame(animationFrameId);
+          render();
+        }
+      });
+    }, { threshold: 0 });
+    
+    if (containerRef.current) observer.observe(containerRef.current);
 
     const mouse = { x: width / 2, y: height / 2, vx: 0, vy: 0 };
     const target = { x: width / 2, y: height / 2 };
@@ -88,8 +101,8 @@ export function TubesBackground({
     let time = 0;
 
     function render() {
-      // Complete stop on mobile to save CPU/Battery
-      if (window.innerWidth < 768) {
+      // Complete stop on mobile or off-screen to save CPU/GPU and prevent scroll lag
+      if (!isVisible || window.innerWidth < 768) {
         return; 
       }
       
@@ -187,6 +200,7 @@ export function TubesBackground({
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('scroll', updateTarget);
       cancelAnimationFrame(animationFrameId);
+      if (containerRef.current) observer.unobserve(containerRef.current);
     };
   }, []);
 

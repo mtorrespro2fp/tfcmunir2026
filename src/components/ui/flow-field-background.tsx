@@ -113,7 +113,20 @@ export default function NeuralBackground({
       }
     };
 
+    let isVisible = true;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          cancelAnimationFrame(animationFrameId);
+          animate();
+        }
+      });
+    }, { threshold: 0 });
+    observer.observe(container);
+
     const animate = () => {
+      if (!isVisible) return;
 
       ctx.globalCompositeOperation = "destination-out";
       ctx.fillStyle = `rgba(0, 0, 0, ${trailOpacity})`;
@@ -177,6 +190,7 @@ export default function NeuralBackground({
       container.removeEventListener("mousemove", handleMouseMove);
       container.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
     };
   }, [color, trailOpacity, particleCount, speed]);
 
