@@ -325,10 +325,19 @@ const UseCasesSection = () => {
         <motion.div
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
           viewport={{ once: true }} transition={{ delay: 0.5 }}
-          className="mt-16 flex flex-col items-center justify-center gap-3 cursor-pointer group"
+          className="mt-16 flex flex-col items-center justify-center gap-3 cursor-pointer group text-center"
           onClick={() => document.getElementById("live-demo")?.scrollIntoView({ behavior: "smooth" })}
         >
-          <span className="font-mono text-[10px] md:text-xs text-cool-gray uppercase tracking-widest group-hover:text-primary transition-colors">
+          <div className="mb-6">
+            <p className="font-mono text-[10px] md:text-xs text-cool-gray uppercase tracking-widest mb-2">
+              Ahorro total estimado implementando todos los flujos
+            </p>
+            <p className="font-mono text-lg md:text-xl font-bold text-light-slate leading-tight">
+              <span className="text-gradient-cyan">61 horas / semana</span> liberadas por empleado
+            </p>
+          </div>
+
+          <span className="font-mono text-[10px] md:text-xs text-cool-gray/70 uppercase tracking-widest group-hover:text-primary transition-colors">
             Probar demo abajo
           </span>
           <div className="text-primary opacity-80 animate-bounce mt-1">
