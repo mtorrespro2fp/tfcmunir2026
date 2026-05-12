@@ -161,29 +161,32 @@ const MiniFlow = ({ nodes }: { nodes: UseCase["nodes"] }) => (
 );
 
 /* ─── Modal / expanded card ─────────────────────────────── */
-const DetailModal = ({ uc, onClose }: { uc: UseCase; onClose: () => void }) => (
-  <motion.div
-    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-    className="fixed inset-0 z-50 flex items-center justify-center p-4"
-    onClick={onClose}
-  >
-    <div className="absolute inset-0 bg-background/90 backdrop-blur-sm" />
+const DetailModal = ({ uc, onClose }: { uc: UseCase; onClose: () => void }) => {
+  const Icon = uc.icon;
+  
+  return (
     <motion.div
-      initial={{ scale: 0.92, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.92, y: 20 }}
-      onClick={e => e.stopPropagation()}
-      className="relative glass-card p-8 max-w-lg w-full z-10"
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
     >
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 text-cool-gray hover:text-foreground transition-colors"
+      <div className="absolute inset-0 bg-background/90 backdrop-blur-md" />
+      <motion.div
+        initial={{ scale: 0.92, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.92, y: 20 }}
+        onClick={e => e.stopPropagation()}
+        className="relative p-8 max-w-lg w-full z-10 rounded-3xl border border-white/10 bg-gradient-to-br from-[#030712]/95 to-background/95 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden"
       >
-        <X size={18} />
-      </button>
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-cool-gray hover:text-foreground transition-colors p-2 rounded-full hover:bg-white/5"
+        >
+          <X size={18} />
+        </button>
 
-      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 text-primary shadow-lg backdrop-blur-md">
-        <uc.icon size={24} className="text-gradient-cyan" />
-      </div>
-      <span className="font-mono text-[10px] text-primary uppercase tracking-widest">{uc.sector}</span>
+        <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-primary shadow-[0_4px_20px_rgba(0,229,184,0.15)] backdrop-blur-md">
+          <Icon size={28} className="text-gradient-cyan" />
+        </div>
+        <span className="font-mono text-[10px] font-semibold text-primary uppercase tracking-widest">{uc.sector}</span>
       <h3 className="font-mono text-xl font-bold text-light-slate mt-1 mb-3">{uc.title}</h3>
       <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">{uc.description}</p>
 
@@ -192,45 +195,52 @@ const DetailModal = ({ uc, onClose }: { uc: UseCase; onClose: () => void }) => (
         {uc.nodes.map((node, i) => (
           <div key={i}>
             <div
-              className="flex items-center gap-3 p-3 rounded border"
+              className="flex items-center gap-3 p-3 rounded-xl border backdrop-blur-sm"
               style={{
-                borderColor: (NODE_COLORS[node.type] ?? "#aaa") + "44",
-                backgroundColor: (NODE_COLORS[node.type] ?? "#aaa") + "0d",
+                borderColor: (NODE_COLORS[node.type] ?? "#aaa") + "30",
+                backgroundColor: (NODE_COLORS[node.type] ?? "#aaa") + "08",
               }}
             >
               <div
-                className="w-2 h-2 rounded-full shrink-0"
-                style={{ backgroundColor: NODE_COLORS[node.type] ?? "#aaa" }}
+                className="w-2.5 h-2.5 rounded-full shrink-0"
+                style={{ backgroundColor: NODE_COLORS[node.type] ?? "#aaa", boxShadow: `0 0 8px ${NODE_COLORS[node.type]}80` }}
               />
               <span className="font-mono text-xs font-semibold text-light-slate">{node.label}</span>
-              <span className="font-mono text-[10px] text-cool-gray ml-auto">{node.sub}</span>
+              <span className="font-mono text-[10px] text-cool-gray/70 ml-auto hidden sm:block">{node.sub}</span>
             </div>
             {i < uc.nodes.length - 1 && (
-              <div className="ml-4 w-px h-2" style={{ backgroundColor: (NODE_COLORS[node.type] ?? "#aaa") + "44" }} />
+              <div className="ml-4 w-px h-2.5" style={{ backgroundColor: (NODE_COLORS[node.type] ?? "#aaa") + "40" }} />
             )}
           </div>
         ))}
       </div>
 
-      <div className="border border-neon-green/20 bg-neon-green/5 rounded p-3 mb-4">
-        <p className="font-mono text-[10px] text-neon-green uppercase tracking-widest mb-1">● Beneficio clave</p>
-        <p className="font-body text-sm text-foreground">{uc.benefit}</p>
+      <div className="border border-neon-green/20 bg-neon-green/5 rounded-xl p-4 mb-5">
+        <p className="font-mono text-[10px] font-bold text-neon-green uppercase tracking-widest mb-1.5 flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse" />
+          Beneficio clave
+        </p>
+        <p className="font-body text-sm text-foreground/90">{uc.benefit}</p>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pt-2 border-t border-white/5">
         <span className="font-mono text-xs text-cool-gray">
           Ahorra <span className="text-primary font-bold">{uc.saves}</span>
         </span>
         <button
-          onClick={() => document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })}
-          className="font-mono text-xs text-primary hover:underline"
+          onClick={() => {
+            onClose();
+            setTimeout(() => document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" }), 100);
+          }}
+          className="font-mono text-xs text-primary hover:text-white transition-colors hover:underline underline-offset-4 decoration-primary/50"
         >
           → Quiero este flujo
         </button>
       </div>
     </motion.div>
   </motion.div>
-);
+  );
+};
 
 /* ═══════════════════════════════════════════════════════════
    Main component
