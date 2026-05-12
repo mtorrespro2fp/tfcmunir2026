@@ -36,6 +36,21 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Manejar el botón de atrás del navegador para los enlaces de sección (hashes)
+  useEffect(() => {
+    const handlePopState = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const el = document.querySelector(hash);
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else if (location.pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [location.pathname]);
+
   const handleNav = (href: string, isRoute?: boolean) => {
     if (isRoute) {
       navigate(href);
@@ -48,11 +63,17 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
       setTimeout(() => {
         const el = document.querySelector(href);
         el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (window.location.hash !== href) {
+          window.history.pushState(null, "", href);
+        }
       }, 100);
       return;
     }
     const el = document.querySelector(href);
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (window.location.hash !== href) {
+      window.history.pushState(null, "", href);
+    }
     setIsOpen(false);
   };
 
@@ -63,6 +84,9 @@ const Navbar = ({ extraLinks = [] }: NavbarProps) => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
+      if (window.location.hash) {
+        window.history.pushState(null, "", window.location.pathname);
+      }
     }
   };
 
