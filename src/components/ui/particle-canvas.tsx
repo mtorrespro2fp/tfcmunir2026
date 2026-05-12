@@ -61,7 +61,10 @@ export const ParticleCanvas: React.FC<Props> = ({
   const isVisibleRef = useRef<boolean>(true);
 
   const initParticles = useCallback((width: number, height: number) => {
-    const particleCount = Math.floor(width * height * getParticleDensity());
+    // Hard cap the number of particles to prevent GPU overload on 4K/Ultra-wide screens
+    const rawParticleCount = Math.floor(width * height * getParticleDensity());
+    const particleCount = Math.min(rawParticleCount, 120); 
+
     const newParticles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       const x = Math.random() * width;
@@ -75,7 +78,9 @@ export const ParticleCanvas: React.FC<Props> = ({
     }
     particlesRef.current = newParticles;
 
-    const bgCount = Math.floor(width * height * getBgDensity());
+    const rawBgCount = Math.floor(width * height * getBgDensity());
+    const bgCount = Math.min(rawBgCount, 80);
+
     const newBgParticles: BackgroundParticle[] = [];
     for (let i = 0; i < bgCount; i++) {
       newBgParticles.push({

@@ -105,8 +105,8 @@ export default function NeuralBackground({
 
       particles = [];
       const isMobile = window.innerWidth < 768;
-      // Drastically reduce particles on mobile to maintain 60FPS fluid speed
-      const actualParticleCount = isMobile ? Math.min(100, particleCount) : particleCount;
+      // Reduce particles significantly to maintain 60FPS fluid speed under glassmorphism
+      const actualParticleCount = isMobile ? Math.min(80, particleCount) : Math.min(250, particleCount);
       
       for (let i = 0; i < actualParticleCount; i++) {
         particles.push(new Particle());

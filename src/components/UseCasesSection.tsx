@@ -331,13 +331,9 @@ const UseCasesSection = () => {
           <span className="font-mono text-[10px] md:text-xs text-cool-gray uppercase tracking-widest group-hover:text-primary transition-colors">
             Probar demo abajo
           </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            className="text-primary opacity-80"
-          >
+          <div className="text-primary opacity-80 animate-bounce mt-1">
             <ArrowDown size={24} />
-          </motion.div>
+          </div>
         </motion.div>
       </div>
 
