@@ -11,6 +11,7 @@ const Terms = React.lazy(() => import("./pages/Terms.tsx"));
 import { ParticleCanvas } from "./components/ui/particle-canvas.tsx";
 
 import { SmoothScroll } from "./components/SmoothScroll.tsx";
+import ScrollToTop from "./components/ScrollToTop.tsx";
 
 const App = () => (
   <TooltipProvider>
@@ -18,6 +19,7 @@ const App = () => (
     <Sonner />
     <SmoothScroll>
       <BrowserRouter basename="/tfcmunir2026">
+        <ScrollToTop />
         <div className="fixed inset-0 z-[-1] bg-brand-bg">
           <ParticleCanvas className="!fixed inset-0" />
         </div>
