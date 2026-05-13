@@ -99,11 +99,11 @@ export const ParticleCanvas: React.FC<Props> = ({
   const animate = useCallback((time: number) => {
     if (!isVisibleRef.current) return;
 
-    // Throttling logic: ~7.5fps if idle > 2s (saves GPU while keeping particles alive)
+    // Throttling logic: ~15fps if idle > 2s (saves GPU while keeping particles smooth)
     const idleTime = Date.now() - lastMoveTimeRef.current;
     if (idleTime > 2000) {
       frameCountRef.current++;
-      if (frameCountRef.current % 8 !== 0) {
+      if (frameCountRef.current % 4 !== 0) {
         frameIdRef.current = requestAnimationFrame(animate);
         return;
       }
