@@ -7,7 +7,7 @@ import n8nLogo from "../../../public/N8n-logo-new.svg";
 import geminiLogo from "../../../public/Google_Gemini_logo_2025.svg.webp";
 import antigravityLogo from "../../../public/Google_Antigravity_Logo.webp";
 import githubLogo from "../../../public/6477657755c46a6f4965855f_github_large.webp";
-import pro2fpLogo from "../../../public/logo pro2fp.webp";
+import pro2fpLogo from "../../../public/la_otra_fp_transparente.webp";
 import madridLogo from "../../../public/logo-comunidad-madrid-e1562021779235.webp";
 import odsLogo from "../../../public/ods 2030.webp";
 
@@ -81,7 +81,7 @@ const Logos3 = ({
       description: "Pro2FP",
       image: pro2fpLogo,
       href: "https://pro2fp.es/",
-      className: "h-10 w-auto object-contain mix-blend-screen opacity-100 md:opacity-80 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
+      className: "h-10 w-auto object-contain filter brightness-0 invert opacity-100 md:opacity-60 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-madrid",
