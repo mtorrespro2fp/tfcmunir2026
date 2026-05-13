@@ -125,8 +125,9 @@ const ContactSection = () => {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="font-mono text-xs text-cool-gray block mb-2">NOMBRE *</label>
+                    <label htmlFor="name" className="font-mono text-xs text-cool-gray block mb-2">NOMBRE *</label>
                     <input
+                      id="name" name="name"
                       type="text" required value={form.name} maxLength={100}
                       onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                       placeholder="Tu nombre"
@@ -134,8 +135,9 @@ const ContactSection = () => {
                     />
                   </div>
                   <div>
-                    <label className="font-mono text-xs text-cool-gray block mb-2">EMAIL *</label>
+                    <label htmlFor="email" className="font-mono text-xs text-cool-gray block mb-2">EMAIL *</label>
                     <input
+                      id="email" name="email"
                       type="email" required value={form.email} maxLength={254}
                       onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                       placeholder="tu@email.com"
@@ -145,8 +147,9 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label className="font-mono text-xs text-cool-gray block mb-2">TIPO DE NEGOCIO</label>
+                  <label htmlFor="business" className="font-mono text-xs text-cool-gray block mb-2">TIPO DE NEGOCIO</label>
                   <select
+                    id="business" name="business"
                     value={form.business}
                     onChange={e => setForm(f => ({ ...f, business: e.target.value }))}
                     className="w-full bg-background/50 border border-border rounded px-3 py-2 font-mono text-sm text-foreground focus:outline-none focus:border-primary/60 transition-colors"
@@ -164,8 +167,9 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label className="font-mono text-xs text-cool-gray block mb-2">¿QUÉ QUIERES AUTOMATIZAR?</label>
+                  <label htmlFor="message" className="font-mono text-xs text-cool-gray block mb-2">¿QUÉ QUIERES AUTOMATIZAR?</label>
                   <textarea
+                    id="message" name="message"
                     value={form.message} maxLength={1000}
                     onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                     placeholder="Cuéntanos tu caso..."
