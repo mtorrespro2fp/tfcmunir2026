@@ -10,6 +10,7 @@ import githubLogo from "../../../public/6477657755c46a6f4965855f_github_large.we
 import pro2fpLogo from "../../../public/logo pro2fp.webp";
 import madridLogo from "../../../public/logo-comunidad-madrid-e1562021779235.webp";
 import odsLogo from "../../../public/ods 2030.webp";
+import penwinLogo from "../../../public/penwinlogo.webp";
 
 import {
   Carousel,
@@ -95,6 +96,13 @@ const Logos3 = ({
       description: "ODS 2030",
       image: odsLogo,
       href: "https://ods.uam.es/agenda-2030-y-ods/",
+      className: "h-10 w-auto object-contain filter brightness-0 invert opacity-100 md:opacity-60 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
+    },
+    {
+      id: "logo-penwin",
+      description: "Penwin Edu",
+      image: penwinLogo,
+      href: "https://penwin.org/",
       className: "h-10 w-auto object-contain filter brightness-0 invert opacity-100 md:opacity-60 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
   ],

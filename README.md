@@ -38,6 +38,18 @@ Durante el desarrollo e iteración de este proyecto, he puesto en práctica y pe
 - **QA Visual y Testing Interactivo**: Capacidad crítica para testear la aplicación ("probar la web"), detectar bugs sutiles (como tirones al hacer scroll, problemas de enrutamiento con hashes, o problemas de contraste) e iterar iterativamente sobre el código para resolverlos sin romper la lógica existente.
 - **Auditoría de Seguridad y Limpieza de Código**: Detección y corrección de vulnerabilidades (XSS, sanitización de inputs, CSP), eliminación de código muerto y dependencias huérfanas heredadas del scaffolding inicial, reduciendo el bundle de producción en más de un 40%.
 
+## 🤝 Tecnologías e Identidades que Impulsan NeoFlow
+Este proyecto se apoya y ha sido impulsado gracias a las siguientes organizaciones, tecnologías y entidades de referencia:
+- **ChatGPT** (OpenAI)
+- **Claude AI** (Anthropic)
+- **n8n** (Automatización de flujos)
+- **Google Gemini** & **Google Antigravity**
+- **GitHub** (Versionado y despliegue)
+- **Pro2FP**
+- **Penwin Edu**
+- **Comunidad de Madrid**
+- **ODS 2030** (Objetivos de Desarrollo Sostenible)
+
 ## 🚀 Instalación y Despliegue Local
 Si deseas probar o modificar este proyecto en tu entorno local:
 
