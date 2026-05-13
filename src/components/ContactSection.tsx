@@ -127,7 +127,7 @@ const ContactSection = () => {
                   <div>
                     <label htmlFor="name" className="font-mono text-xs text-cool-gray block mb-2">NOMBRE *</label>
                     <input
-                      id="name" name="name"
+                      id="name" name="name" autoComplete="name"
                       type="text" required value={form.name} maxLength={100}
                       onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                       placeholder="Tu nombre"
@@ -137,7 +137,7 @@ const ContactSection = () => {
                   <div>
                     <label htmlFor="email" className="font-mono text-xs text-cool-gray block mb-2">EMAIL *</label>
                     <input
-                      id="email" name="email"
+                      id="email" name="email" autoComplete="email"
                       type="email" required value={form.email} maxLength={254}
                       onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                       placeholder="tu@email.com"

@@ -198,8 +198,9 @@ const LiveDemoSection = () => {
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">Nombre *</label>
+                        <label htmlFor="demo-nombre" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">Nombre *</label>
                         <input
+                          id="demo-nombre" name="demo-nombre" autoComplete="name"
                           required value={form.nombre} maxLength={100}
                           onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))}
                           placeholder="Ana García"
@@ -207,8 +208,9 @@ const LiveDemoSection = () => {
                         />
                       </div>
                       <div>
-                        <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">Email *</label>
+                        <label htmlFor="demo-email" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">Email *</label>
                         <input
+                          id="demo-email" name="demo-email" autoComplete="email"
                           type="email" required value={form.email} maxLength={254}
                           onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                           placeholder="ana@empresa.com"
@@ -218,8 +220,9 @@ const LiveDemoSection = () => {
                     </div>
 
                     <div>
-                      <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">Sector / Negocio</label>
+                      <label htmlFor="demo-negocio" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">Sector / Negocio</label>
                       <select
+                        id="demo-negocio" name="demo-negocio"
                         value={form.negocio}
                         onChange={e => setForm(f => ({ ...f, negocio: e.target.value }))}
                         className="w-full bg-background/50 border border-border rounded px-3 py-2 font-mono text-sm text-foreground focus:outline-none focus:border-primary/60 transition-colors"
@@ -237,8 +240,9 @@ const LiveDemoSection = () => {
                     </div>
 
                     <div>
-                      <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">¿Qué quieres automatizar?</label>
+                      <label htmlFor="demo-mensaje" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">¿Qué quieres automatizar?</label>
                       <textarea
+                        id="demo-mensaje" name="demo-mensaje"
                         value={form.mensaje} maxLength={1000}
                         onChange={e => setForm(f => ({ ...f, mensaje: e.target.value }))}
                         placeholder="Ej: Quiero automatizar las reservas de mi restaurante y enviar confirmación por WhatsApp..."

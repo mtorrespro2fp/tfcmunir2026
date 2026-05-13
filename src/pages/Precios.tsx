@@ -190,11 +190,12 @@ const Precios = () => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* Card number */}
                   <div>
-                    <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
+                    <label htmlFor="card-number" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
                       Número de tarjeta
                     </label>
                     <div className="relative">
                       <input
+                        id="card-number" name="card-number" autoComplete="cc-number"
                         type="text"
                         inputMode="numeric"
                         value={form.cardNumber}
@@ -217,10 +218,11 @@ const Precios = () => {
 
                   {/* Holder */}
                   <div>
-                    <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
+                    <label htmlFor="card-name" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
                       Titular de la tarjeta
                     </label>
                     <input
+                      id="card-name" name="card-name" autoComplete="cc-name"
                       type="text"
                       value={form.holder}
                       onChange={(e) => setForm((f) => ({ ...f, holder: e.target.value }))}
@@ -236,10 +238,11 @@ const Precios = () => {
                   {/* Expiry + CVV */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
+                      <label htmlFor="card-expiry" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
                         Fecha de expiración
                       </label>
                       <input
+                        id="card-expiry" name="card-expiry" autoComplete="cc-exp"
                         type="text"
                         inputMode="numeric"
                         value={form.expiry}
@@ -256,10 +259,11 @@ const Precios = () => {
                       />
                     </div>
                     <div>
-                      <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
+                      <label htmlFor="card-cvc" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
                         CVV
                       </label>
                       <input
+                        id="card-cvc" name="card-cvc" autoComplete="cc-csc"
                         type="password"
                         inputMode="numeric"
                         value={form.cvv}
@@ -282,10 +286,11 @@ const Precios = () => {
 
                   {/* Email */}
                   <div>
-                    <label className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
+                    <label htmlFor="billing-email" className="font-mono text-[10px] text-cool-gray block mb-2 uppercase tracking-wider">
                       Email de facturación
                     </label>
                     <input
+                      id="billing-email" name="billing-email" autoComplete="email"
                       type="email"
                       value={form.email}
                       onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}

@@ -142,7 +142,9 @@ const AIAgentButton = () => {
 
             {/* Input */}
             <div className="p-3 border-t border-border/50 flex gap-2">
+              <label htmlFor="ai-chat-input" className="sr-only">Escribe tu consulta</label>
               <input
+                id="ai-chat-input" name="ai-chat" autoComplete="off"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
