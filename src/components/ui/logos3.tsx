@@ -81,7 +81,7 @@ const Logos3 = ({
       description: "Pro2FP",
       image: pro2fpLogo,
       href: "https://pro2fp.es/",
-      className: "h-10 w-auto object-contain filter brightness-0 invert opacity-100 md:opacity-60 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
+      className: "h-10 w-auto object-contain mix-blend-screen opacity-100 md:opacity-80 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-madrid",
@@ -110,7 +110,7 @@ const Logos3 = ({
       <div className="pt-2 md:pt-4">
         <div className="relative mx-auto flex items-center justify-center lg:max-w-[1200px] w-full">
           <Carousel
-            opts={{ loop: true, dragFree: true }}
+            opts={{ loop: true, dragFree: true, watchDrag: false }}
             plugins={[AutoScroll({ playOnInit: true, speed: 1.5, stopOnInteraction: false, stopOnMouseEnter: false })]}
             className="w-full"
           >
