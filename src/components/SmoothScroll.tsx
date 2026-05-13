@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 
 interface SmoothScrollProps {
@@ -7,6 +8,7 @@ interface SmoothScrollProps {
 
 export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
   const lenisRef = useRef<Lenis | null>(null);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     // Inicializar Lenis para conseguir ese scroll "pesado", suave y fluido tipo Apple
@@ -35,6 +37,13 @@ export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
       lenis.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    // Cuando cambia la ruta, le decimos a Lenis que nos devuelva arriba inmediatamente
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  }, [pathname]);
 
   return <>{children}</>;
 };

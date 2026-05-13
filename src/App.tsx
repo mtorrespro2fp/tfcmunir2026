@@ -17,8 +17,8 @@ const App = () => (
   <TooltipProvider>
     <Toaster />
     <Sonner />
-    <SmoothScroll>
-      <BrowserRouter basename="/tfcmunir2026">
+    <BrowserRouter basename="/tfcmunir2026">
+      <SmoothScroll>
         <ScrollToTop />
         <div className="fixed inset-0 z-[-1] bg-brand-bg">
           <ParticleCanvas className="!fixed inset-0" />
@@ -35,8 +35,8 @@ const App = () => (
             </Routes>
           </Suspense>
         </div>
-      </BrowserRouter>
-    </SmoothScroll>
+      </SmoothScroll>
+    </BrowserRouter>
   </TooltipProvider>
 );
 
