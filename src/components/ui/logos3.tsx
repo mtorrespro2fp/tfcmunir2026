@@ -39,63 +39,63 @@ const Logos3 = ({
       description: "ChatGPT",
       image: chatgptLogo,
       href: "https://chatgpt.com/",
-      className: "h-10 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
+      className: "h-10 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-claude",
       description: "Claude AI",
       image: claudeLogo,
       href: "https://claude.ai/",
-      className: "h-9 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
+      className: "h-9 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-n8n",
       description: "n8n",
       image: n8nLogo,
       href: "https://n8n.io/",
-      className: "h-9 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
+      className: "h-9 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-gemini",
       description: "Google Gemini",
       image: geminiLogo,
       href: "https://gemini.google.com/",
-      className: "h-9 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]",
+      className: "h-9 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-antigravity",
       description: "Google Antigravity",
       image: antigravityLogo,
       href: "https://antigravity.google/",
-      className: "h-10 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
+      className: "h-10 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-github",
       description: "GitHub",
       image: githubLogo,
       href: "https://github.com/",
-      className: "h-10 w-auto object-contain filter brightness-0 invert opacity-100 md:opacity-60 md:hover:opacity-100 transition-all",
+      className: "h-10 w-auto object-contain filter brightness-0 invert opacity-100 md:opacity-60 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-pro2fp",
       description: "Pro2FP",
       image: pro2fpLogo,
       href: "https://pro2fp.es/",
-      className: "h-10 w-auto object-contain opacity-100 md:opacity-60 md:hover:opacity-100 transition-all",
+      className: "h-10 w-auto object-contain opacity-100 md:opacity-60 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-madrid",
       description: "Comunidad de Madrid",
       image: madridLogo,
       href: "https://www.comunidad.madrid/",
-      className: "h-10 w-auto object-contain filter brightness-0 invert opacity-100 md:opacity-60 md:hover:opacity-100 transition-all",
+      className: "h-10 w-auto object-contain filter brightness-0 invert opacity-100 md:opacity-60 md:hover:opacity-100 transition-all drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
     {
       id: "logo-ods",
       description: "ODS 2030",
       image: odsLogo,
       href: "https://ods.uam.es/agenda-2030-y-ods/",
-      className: "h-10 w-auto object-contain opacity-100 md:opacity-90 md:hover:opacity-100 transition-all rounded-sm filter-none md:filter md:grayscale md:hover:grayscale-0",
+      className: "h-10 w-auto object-contain opacity-100 md:opacity-90 md:hover:opacity-100 transition-all rounded-sm filter-none md:filter md:grayscale md:hover:grayscale-0 drop-shadow-[0_0_12px_rgba(255,255,255,0.15)] md:hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]",
     },
   ],
   className
@@ -118,13 +118,13 @@ const Logos3 = ({
               {logos.map((logo) => (
                 <CarouselItem
                   key={logo.id}
-                  className="flex basis-1/2 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
+                  className="flex-[0_0_auto] flex justify-center pl-0"
                 >
                   <a 
                     href={logo.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-8 md:mx-6 flex shrink-0 items-center justify-center cursor-pointer"
+                    className="mx-8 md:mx-12 flex shrink-0 items-center justify-center cursor-pointer"
                   >
                     <img
                       src={logo.image}

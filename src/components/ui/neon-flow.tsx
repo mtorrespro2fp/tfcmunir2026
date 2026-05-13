@@ -93,7 +93,7 @@ export function TubesBackground({
     window.addEventListener('scroll', updateTarget, { passive: true });
 
     // Trail logic
-    const segments = 60; 
+    const segments = 35; // REDUCED from 60 to 35 for massive GPU optimization
     const history: {x: number, y: number}[] = [];
     for (let i=0; i<segments; i++) history.push({x: width/2, y: height/2});
 

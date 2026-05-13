@@ -63,7 +63,7 @@ export const ParticleCanvas: React.FC<Props> = ({
   const initParticles = useCallback((width: number, height: number) => {
     // Hard cap the number of particles to prevent GPU overload on 4K/Ultra-wide screens
     const rawParticleCount = Math.floor(width * height * getParticleDensity());
-    const particleCount = Math.min(rawParticleCount, 120); 
+    const particleCount = Math.min(rawParticleCount, 60); 
 
     const newParticles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
@@ -79,7 +79,7 @@ export const ParticleCanvas: React.FC<Props> = ({
     particlesRef.current = newParticles;
 
     const rawBgCount = Math.floor(width * height * getBgDensity());
-    const bgCount = Math.min(rawBgCount, 80);
+    const bgCount = Math.min(rawBgCount, 40);
 
     const newBgParticles: BackgroundParticle[] = [];
     for (let i = 0; i < bgCount; i++) {
@@ -98,16 +98,6 @@ export const ParticleCanvas: React.FC<Props> = ({
 
   const animate = useCallback((time: number) => {
     if (!isVisibleRef.current) return;
-
-    // Throttling logic: ~15fps if idle > 2s (saves GPU while keeping particles smooth)
-    const idleTime = Date.now() - lastMoveTimeRef.current;
-    if (idleTime > 2000) {
-      frameCountRef.current++;
-      if (frameCountRef.current % 4 !== 0) {
-        frameIdRef.current = requestAnimationFrame(animate);
-        return;
-      }
-    }
 
     const canvas = canvasRef.current;
     if (!canvas) return;
