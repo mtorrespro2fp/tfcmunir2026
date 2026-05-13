@@ -25,6 +25,7 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
     if (!ctx) return;
 
     let animFrameId: number;
+    let isVisible = true;
 
     const resizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -50,6 +51,7 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
     let lastTime = 0;
 
     const draw = (timestamp: number) => {
+      if (!isVisible) return;
 
       if (timestamp - lastTime < interval) {
         animFrameId = requestAnimationFrame(draw);
@@ -76,11 +78,28 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
       animFrameId = requestAnimationFrame(draw);
     };
 
-    animFrameId = requestAnimationFrame(draw);
+    // Pause animation when off-screen to save CPU/GPU
+    const container = canvas.parentElement;
+    let observer: IntersectionObserver | undefined;
+    if (container) {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isVisible = entry.isIntersecting;
+          if (isVisible) {
+            cancelAnimationFrame(animFrameId);
+            animFrameId = requestAnimationFrame(draw);
+          }
+        });
+      }, { threshold: 0 });
+      observer.observe(container);
+    } else {
+      animFrameId = requestAnimationFrame(draw);
+    }
 
     return () => {
       cancelAnimationFrame(animFrameId);
       window.removeEventListener('resize', resizeCanvas);
+      observer?.disconnect();
     };
   }, [fontSize, color, characters, fadeOpacity, speed]);
 

@@ -26,6 +26,9 @@ Para lograr el aspecto premium de esta web, nos hemos inspirado y utilizado comp
 ## 🏗️ Créditos de Estructura
 La estructura de archivos base (`scaffolding`) del proyecto fue generada inicialmente como un borrador utilizando [Lovable](https://lovable.dev/). Todo el diseño personalizado, la implementación de componentes avanzados, físicas, animaciones y la lógica de negocio han sido refactorizados y desarrollados de forma manual posteriormente.
 
+## 🎨 Metodología de Prototipado
+Antes de llegar a la versión final (v3.0), se desarrollaron múltiples prototipos visuales internos (`Proto1 — Calm Flow`, `Proto2 — Interactive Neon`, `Proto3 — Digital Serenity`) para evaluar diferentes estrategias de diseño, fondos animados y niveles de interactividad. Este proceso iterativo de prototipado permitió tomar decisiones de diseño fundamentadas antes de consolidar la versión definitiva, aplicando una metodología profesional de exploración visual progresiva.
+
 ## 🧠 Competencias y Habilidades Desarrolladas
 Durante el desarrollo e iteración de este proyecto, he puesto en práctica y perfeccionado las siguientes habilidades profesionales:
 
@@ -33,6 +36,7 @@ Durante el desarrollo e iteración de este proyecto, he puesto en práctica y pe
 - **Ingeniería UI/UX (SaaS Premium)**: Traducción de conceptos estéticos modernos (Glassmorphism, Dark Neon) a código funcional mediante Tailwind CSS y Framer Motion, priorizando una experiencia de usuario inmersiva.
 - **Green Coding y Optimización de Rendimiento**: Gestión profunda de los ciclos de vida de React, uso de `IntersectionObserver` para pausar renders fuera de pantalla, limitación estricta de partículas en Canvas y eliminación de fugas de memoria (Memory Leaks) para mantener 60 FPS estables sin sobrecargar la CPU/GPU del usuario.
 - **QA Visual y Testing Interactivo**: Capacidad crítica para testear la aplicación ("probar la web"), detectar bugs sutiles (como tirones al hacer scroll, problemas de enrutamiento con hashes, o problemas de contraste) e iterar iterativamente sobre el código para resolverlos sin romper la lógica existente.
+- **Auditoría de Seguridad y Limpieza de Código**: Detección y corrección de vulnerabilidades (XSS, sanitización de inputs, CSP), eliminación de código muerto y dependencias huérfanas heredadas del scaffolding inicial, reduciendo el bundle de producción en más de un 40%.
 
 ## 🚀 Instalación y Despliegue Local
 Si deseas probar o modificar este proyecto en tu entorno local:

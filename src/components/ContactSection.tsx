@@ -32,6 +32,9 @@ async function submitToN8n(data: {
   return { ok: false };
 }
 
+/* ─── Sanitize server response ──────────────────────────── */
+const sanitize = (s: string) => s.replace(/[<>"'&]/g, c => `&#${c.charCodeAt(0)};`);
+
 const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", business: "", message: "" });
   const [sent, setSent]     = useState(false);
@@ -50,8 +53,8 @@ const ContactSection = () => {
     const result = await submitToN8n(form);
     setN8nLive(result.ok);
     setAiReply(
-      result.ai ??
-      `¡Hola ${form.name}! Hemos recibido tu consulta sobre "${form.business || "automatización"}". ` +
+      sanitize(result.ai ?? "") ||
+      `¡Hola ${sanitize(form.name)}! Hemos recibido tu consulta sobre "${sanitize(form.business || "automatización")}". ` +
       `Nuestro equipo te enviará una propuesta personalizada en menos de 24 horas. — NeoFlow AI 🚀`
     );
 

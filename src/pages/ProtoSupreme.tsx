@@ -51,7 +51,7 @@ const ProtoSupreme = () => {
       {/* ========================================================== */}
       <div className="relative w-full">
         <div className="absolute inset-0 z-0 pointer-events-auto mix-blend-screen opacity-50">
-          <TubesBackground enableClickInteraction={true} />
+          <TubesBackground />
         </div>
 
         {/* Soft fading gradients to blend with surrounding sections */}

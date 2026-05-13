@@ -188,6 +188,7 @@ export function TubesBackground({
       ctx.shadowBlur = 30;
       ctx.shadowColor = "#00E5B8";
       ctx.fill();
+      ctx.shadowBlur = 0;
 
       animationFrameId = requestAnimationFrame(render);
     };
