@@ -5,6 +5,7 @@ import chatgptLogo from "../../../public/pngimg.com-chatgpt_PNG2-1.webp";
 import claudeLogo from "../../../public/Claude_AI_logo.svg.webp";
 import n8nLogo from "../../../public/N8n-logo-new.svg";
 import geminiLogo from "../../../public/Google_Gemini_logo_2025.svg.webp";
+import antigravityLogo from "../../../public/Google_Antigravity_Logo.webp";
 import githubLogo from "../../../public/6477657755c46a6f4965855f_github_large.webp";
 import pro2fpLogo from "../../../public/logo pro2fp.webp";
 import madridLogo from "../../../public/logo-comunidad-madrid-e1562021779235.webp";
@@ -60,6 +61,13 @@ const Logos3 = ({
       image: geminiLogo,
       href: "https://gemini.google.com/",
       className: "h-9 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]",
+    },
+    {
+      id: "logo-antigravity",
+      description: "Google Antigravity",
+      image: antigravityLogo,
+      href: "https://antigravity.google/",
+      className: "h-10 w-auto object-contain filter-none opacity-100 md:filter md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100 transition-all",
     },
     {
       id: "logo-github",
