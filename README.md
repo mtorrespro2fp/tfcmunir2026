@@ -40,14 +40,14 @@ Durante el desarrollo e iteración de este proyecto, he puesto en práctica y pe
 
 ## 🤝 Tecnologías e Identidades que Impulsan NeoFlow
 Este proyecto se apoya y ha sido impulsado gracias a las siguientes organizaciones, tecnologías y entidades de referencia:
-- **ChatGPT** (OpenAI)
-- **Claude AI** (Anthropic)
-- **n8n** (Automatización de flujos)
-- **Google Gemini** & **Google Antigravity**
+- **ChatGPT** (OpenAI) Creacion y edicion de imagenes
+- **Claude AI** (Anthropic) Resolucion de limpieza y ciberseguridad
+- **n8n** (Automatización de flujos) Uso de servidores locales para pruebas
+- **Google Gemini** & **Google Antigravity** Desarrollo y diseño de la web
 - **GitHub** (Versionado y despliegue)
-- **Pro2FP**
-- **Penwin Edu**
-- **Comunidad de Madrid**
+- **Pro2FP** Instituto de Formación Profesional
+- **Penwin Edu** Empresa de practicas
+- **Comunidad de Madrid** Donde se impartio el proyecto
 - **ODS 2030** (Objetivos de Desarrollo Sostenible)
 
 ## 🚀 Instalación y Despliegue Local
